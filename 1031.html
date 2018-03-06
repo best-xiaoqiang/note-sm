@@ -245,9 +245,9 @@
         var arr=[1,3,4]
         var result=arr.join()
         var result2=arr.join('-')
-//        console.log('arr:', arr)
-//        console.log('result join()', result)    //1,2,3
-//        console.log('result join("-")', result2)
+//        console.log('arr:', arr)              //[1,3,4]
+//        console.log('result join()', result)    //1,3,4
+//        console.log('result join("-")', result2)    //1-3-4
 
 //        利用join创建一个可以复制字符串的函数
         var str='闪萌'
@@ -255,7 +255,7 @@
             return new Array(20).join(str)
         }
         var result3=repeatStr(str)
-//        console.log('repeatStr:', result3)    //20个‘闪萌’
+//        console.log('repeatStr:', result3)    //19个‘闪萌’
     })()
     
 
@@ -509,6 +509,108 @@
 //            这里也是？
         })
     })()
+
+
+
+        /* 29.parseInt parseFloat Number*/
+    ;
+    (function () {
+//        1.Number不能转换整体上不是数字的东西（既不是数字字符串，也不是数字）
+        var num1 = Number(3.14)
+        var num2 = Number('3.14')
+//        var num3 = Number(3.14abc)
+        var num4 = Number('3.14abc')
+//        console.log('num1:', num1)  //3.14
+//        console.log('num2:', num2)  //3.14
+//        console.log('num3:', num3)  //报错：Invalid or unexpected token
+//        console.log('num4:', num4)  //NaN
+
+//        2.parseInt只能解析出整数部分
+        var num5 = parseInt('3.14abc')
+        var num6 = parseFloat('3.14abc')
+//        console.log('num5', num5)   //3
+//        console.log('num6', num6)   //3.14
+
+//        3.parseInt的第二个参数可以设置基数，按这个基数的进制来进行解析
+        var num7 = parseInt('0x123')    //291
+        var num8 = parseFloat('0x123')  //0
+        var num9 = parseInt('0x123', 16)    //291
+        var num10 = parseInt('0x123', 10)   //0
+
+//        console.log('num7:', num7)
+//        console.log('num8:', num8)
+//        console.log('num9:', num9)
+//        console.log('num10:', num10)
+
+//        从num7可以看出，parseInt可以自动识别出进制，并相应解析；同时，又能通过第二个参数，改变解析时使用的进制
+
+//        4.算数运算符
+//        算数运算符的转化原理是Number()
+        var a = '123'
+        var b = '123a'
+        var num11 = +a  //123
+        var num12 = +b  //NaN
+//        console.log('num11:', num11)
+//        console.log('num12:', num12)
+    })()
+
+
+
+        /* 30.date */
+    ;
+    (function () {
+        var d = new Date()
+        var myDate = d.getDate()    //日期
+        var myDay = d.getDay()      //星期---星期日是0
+        var myMonth = d.getMonth()  //月份---好像比正常月份少1
+        var myFullYear = d.getFullYear()    //年份
+//        console.log(myDate,myDay,myMonth,myFullYear)
+    })()
+
+
+
+        /* 31.RegExp */
+    ;
+    (function () {
+        var reg = /^abc$/
+        var reg2 = /^abc|abc$/
+//        console.log(reg.test('abc'))        //true
+//        console.log(reg.test('abcabc'))     //false
+//        虽然^表示以什么开头，$表示以什么结尾，但是如reg所示的正则并不表示满足前两个条件即可，而是表示要完全匹配
+//        console.log(reg2.test('abcabc'))    //true
+    })()
+
+
+
+        /* 32.闭包 */
+    ;
+    (function () {
+
+        for(var i=0;i<10;i++){
+            setTimeout(function () {
+//                console.log(i)  // 十个10
+            }, 1000)
+        }
+
+        for(var i = 0; i < 10; i++) {
+//            setTimeout(function(i) {
+//                console.log(i);
+//            }, 1000);
+
+//            这里为什么在setTimeout中传入i会得到undefined?????????
+        }
+
+
+        for(var i=0;i<10;i++){
+            (function(e){
+                setTimeout(function () {
+//                    console.log(e) // 0-9
+                }, 1000)
+            })(i)
+        }
+    })()
+
+
 </script>
 </body>
 </html>

@@ -177,8 +177,10 @@ fixed开启元素的固定定位
 
 z-index
 当元素开启了定位以后，可以通过z-index来设置元素的层级；
-z-index需要一个整数作为参数，值越大层级越高；
-两个元素发生重叠时，z-index值越大越优先显示，z-index值相同的优先显示下边的元素。
+z-index需要一个整数作为参数，值越大层级越高
+；
+两个元素发生重叠时，z-index值越大越优先显示，z-index值相同的优先显示下边的元素
+。
 写法：
 position:relative;
 left:100px;
@@ -783,6 +785,15 @@ console.log(fun());//打印函数的返回值
 
 
 
+关于this的一则小笑话：
+小红对老公抱怨：
+“你看人家小丽的老公，每天见面都亲她一口。你能不能像小丽的老公学习一下？”
+小红的老公说：
+“不行啊，我亲小丽的话她老公肯定会打我的”
+这里，“每天见面都亲她一口”中的“她”就相当于是this。
+this就是为了让你接受这个故事的时候，能够将故事中的这个角色代替成你自己的角色。
+this的存在，又比如说明书中的“你”，谁在看说明书，这个“你”代指的就是谁。
+
 1.this
 	- this是函数的上下文对象，函数在调用时，由浏览器传递进来
 	- 根据函数调用的方式，this的值也不同
@@ -906,11 +917,11 @@ return a-b;
 
 arguments
 function sum(){
-var result=0;
-for(var i=0;i<arguments.length;i++){
-result+=arguments[i];
-}
-return result;
+  var result=0;
+  for(var i=0;i<arguments.length;i++){
+    result+=arguments[i];
+  }
+  return result;
 }
 这样，
 利用arguments
@@ -927,6 +938,12 @@ this到底是谁？
 2，以方法形式调用，this是调用方法的对象
 3，以构建函数调用，this是新建的对象
 4，使用call和apply调用，this是call和apply第一个参数
+
+this到底是谁（番外篇）？
+1.如果是大老板的内心独白，“你”就是指老板。
+2.如果是下发给员工的指令，“你”就是每一个员工。
+3.如果是产品上的说明书，“你”就是每一个用户。
+4.使用call和apply调用，就是说明这是在对谁说话。
 
 
 fun();                  //window
