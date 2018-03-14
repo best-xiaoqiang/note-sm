@@ -18,6 +18,8 @@
             top: 0px;
             right: 0px;
         }
+        
+
     </style>
 </head>
 <body>
@@ -27,6 +29,8 @@
         可以伸缩的文字
         <div class="state-tip"></div>
     </div>
+    
+
 
 <script>
     /*
@@ -472,7 +476,7 @@
 
 
         /* 28.for in 和 for of */
-//    for in用于遍历对象(如果遍历数组，会遍历数组的所有可遍历属性，包括原型)
+//    for in用于遍历对象(如果遍历数组，会遍历数组的所有可遍历属性，包括原型。所以for in最好结合hasOwnProperty使用)
 //    for of可以用于遍历数组，遍历的值
 //    foreach遍历的时候，既不能用break终止遍历，又不能用return跳到外层函数
     ;
@@ -524,6 +528,15 @@
 //        console.log('num2:', num2)  //3.14
 //        console.log('num3:', num3)  //报错：Invalid or unexpected token
 //        console.log('num4:', num4)  //NaN
+
+//        console.log(10 == 010)  //false
+//        在比较的过程中，以0开头的被转换成了八进制
+//        然鹅，在ES5的严格模式下，这个特性被移除了
+
+//        console.log(Number(0x10))   //16
+//        console.log(Number(0b10))   //2
+//        console.log(Number(010))        //8
+//        console.log(Number('010'))      //10
 
 //        2.parseInt只能解析出整数部分
         var num5 = parseInt('3.14abc')
@@ -608,6 +621,230 @@
                 }, 1000)
             })(i)
         }
+    })()
+
+
+
+        /* 33.javascript所有变量都可以当对象使用，除了null和undefined */
+    ;
+    (function () {
+//        console.log(null.toString())          //报错
+//        console.log(undefined.toString());    //报错
+//        console.log([1, 2, 3].toString());
+//        console.log(false.toString());
+//        var obj = {name: 'xiaoqiang'}
+//        console.log(obj.toString());
+//        console.log(123.toString());          //报错
+//        一个常见的误解是数字的字面值（literal）不能当作对象使用。这是因为 JavaScript 解析器的一个错误， 它试图将点操作符解析为浮点数字面值的一部分。
+//        console.log((123).toString());
+    })()
+
+
+
+        /* 34.删除属性的唯一方法是使用 delete 操作符；设置属性为 undefined 或者 null 并不能真正的删除属性， 而仅仅是移除了属性和值的关联。 */
+    ;
+    (function () {
+        var obj = {
+            name: 'xiaoqiang',
+            gender: 'man',
+            face: 'cool'
+        }
+        obj.name = null
+        obj.gender = undefined
+        delete obj.face
+        for(var i in obj){
+            if(obj.hasOwnProperty(i)){
+//                console.log(i+':'+obj[i])
+            }
+        }
+    })()
+
+
+
+        /* 35.obj有没有length属性(没有)。Object.keys() */
+    ;
+    (function () {
+        var obj = {
+            name: '小强',
+            age: '12'
+        }
+//        console.log(obj.length) //undefined
+
+        var keysed = Object.keys(obj)
+        var len = keysed.length
+//        console.log(len)
+
+    })()
+
+
+
+        /* 36.将参数从一个函数传递到另一个函数的方法 */
+    ;
+    (function () {
+        function foo(){
+            bar.apply(null, arguments)
+//            bar函数用foo函数的argu?
+        }
+        function bar(a, b, c){
+//            干活
+        }
+    })()
+
+
+
+        /* 37.构造函数的返回 */
+    ;
+    (function () {
+//           通过new关键词调用的是构造函数
+//           正常情况下返回的都是返回this对象（也就是新创建的对象）
+//        特殊情况就是，被new调用的函数有显示的return且return的是一个对象
+
+        function Test(){
+            this.value = 2
+            return {
+                foo: 'hhh'
+            }
+        }
+
+        var obj = new Test()
+//        console.log(obj.value)  //undefined
+//        console.log(obj.foo)    //'hhh'
+
+//        但是new Test（）并不会将Test的prototype指向返回的这个对象
+//        而是指向new出来的对象（这个对象已经被new出来，只是没有被返回）
+
+    })()
+
+    
+
+        /* 38.作用域与命名空间 */
+    ;
+    (function () {
+        var items = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        for(var i = 0; i < 3; i++) {
+            subLoop();
+        }
+
+        function subLoop() {
+            // subLoop 函数作用域
+            for(i = 0; i < 4; i++) { // 没有使用 var 声明变量
+                // 干活
+//                console.log(items[i])
+            }
+        }
+        //1, 2, 3, 4
+//        因为subLoop中的i没有var，所以是全局变量，所以只会进行一轮，而不是预期中的三轮
+
+//        局部变量的声明方式：1.参数；2.var
+
+        if(!aBianliang){
+            var aBianliang = {}
+//            console.log('ok')   //ok
+        }
+//      因为这里的“aBianliang”被var过
+
+//        #2
+        if(typeof bBianliang){
+//            console.log(typeof bBianliang)         //undefined
+//            console.log(typeof(typeof bBianliang))  //string
+//            因为typeof的返回结果是string类型（无论测试结果是什么类型），所以经常用typeof做判断而且不会有报错的危险
+        }
+    })()
+
+
+
+        /* 39.变量查找顺序 */
+    ;
+    (function () {
+//        比如，当访问函数内的 foo 变量时，JavaScript 会按照下面顺序查找：
+//        1.当前作用域内是否有 var foo 的定义。
+//        2.函数形式参数（形参）是否有使用 foo 名称的。
+//        3.函数自身是否叫做 foo。
+//        4.回溯到上一级作用域，然后从 1 重新开始。
+    })()
+
+
+
+        /* 40.遍历时缓存数组的长度 */
+    ;
+    (function () {
+        var list = [1, 2, 3, 4, 5];
+        for(var i = 0, l = list.length; i < l; i++) {
+//            console.log(list[i]);
+        }
+//        上面 l = list.length 就是缓存数组的长度，不用每次遍历都访问数组的长度，节省了性能
+    })()
+
+
+
+        /* 41.Array构造函数 */
+    ;
+    (function () {
+//        1.创建数组的时候推荐使用字面量方式，因为new Array()的方式不好用
+        var arr1 = new Array(1,2,3,4)   //传多个数字的时候，表示一个所见即所得的数组
+        var arr2 = new Array(6)         //传一个数字的时候，表示一个长度为该数字的数组，而且还是空的（只是设置了长度）
+//        console.log(arr1)   //[1,2,3,4]
+//        console.log(arr2)   //[empty * 6]
+        var arr3 = new Array('6')       //传一个的时候，传成字符串，“也不能”达到得到一个元素只有一个的数组的目的
+//        console.log(arr3)       //["6"]
+
+//        作用： 可以用来重复字符串
+        var result = new Array(6).join('帅哥')
+//        console.log(result)
+    })()
+
+
+
+        /* 42.检测一个对象的类型 */
+    ;
+    (function () {
+//        console.log(typeof [1,2,3])                 //"object"
+//        console.log(typeof (new String('str')))     //"object"
+//        用typeof大多数返回的是“object”，并不能起到检测类型的作用
+//        唯一的作用： 测试未定义的变量(见#2)
+
+//        检测一个对象的最好的方法：
+//        Object.prototype.toString
+        var obj={
+            res1: Object.prototype.toString.call('hello'),
+            res2: Object.prototype.toString.call(123),
+            res3: Object.prototype.toString.call(false),
+            res4: Object.prototype.toString.call(null),
+            res5: Object.prototype.toString.call(undefined),
+            res6: Object.prototype.toString.call({}),
+            res7: Object.prototype.toString.call([]),
+            res8: Object.prototype.toString.call(new Date())
+        }
+
+        for(var i=1;i<=8;i++){
+            var res = 'res' + i
+//            console.log(obj[res])
+        }
+    })()
+
+
+
+        /* 43.Number()和new Number() */
+    ;
+    (function () {
+//        console.log(Number(10) == new Number(10))   //true
+//        console.log(Number(10) === new Number(10))  //false
+//        console.log(Object.prototype.toString.call(Number(10)))         //[object Number]
+//        console.log(Object.prototype.toString.call(new Number(10)))     //[object Number]
+//        console.log(typeof Number(10))      //number
+//        console.log(typeof new Number(10))  //object
+
+//        由此可以看出，===的类型的比较应该是typeof的方式
+
+//        console.log(typeof (new Number(10) + 0))    //number
+    })()
+
+
+
+        /* 44.为什么不使用eval */
+    ;
+    (function () {
+//        绝对不要使用eval，所以也不要学习什么是eval，以免你记住了eval怎么用，但却忘记了不能用eval
     })()
 
 
