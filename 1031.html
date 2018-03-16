@@ -848,6 +848,68 @@
     })()
 
 
+
+        /* 45.转型函数String() */
+    ;
+    (function () {
+//        转换规则：
+//        1.如果有toString()方法，就调用该方法并返回结果。（数值、布尔值和字符串都有这个方法，它们可以变成包装器类）
+//        2.如果值是null,返回“null”;(null和undefined都没有对应的包装器类，也就没有toString方法)
+//        3.如果值是undefined，返回“undefined”;
+    })()
+
+
+
+        /* 46.constructor */
+    ;
+    (function () {
+        function Test(){
+            this.name = 'jinzhou'
+        }
+//        Test.prototype = {
+//            age: 18
+//        }
+        Test.prototype.gender = 'man'
+        var obj = new Test()
+//        console.log(obj)
+
+        var obj2 = { name: 'jinyu' }
+//        console.log(obj2)
+
+//      正常情况下，一个对象的prototype里保存着constructor属性，construcetor里是创建这个对象的函数
+//      对于构造函数来说，就是再他为跟随者提供的公共空间prototype中，不但有一把通向Object的钥匙，
+//      还有一把可以找到自己这个团队（函数是团队）的钥匙？
+    })()
+
+
+
+
+        /* 47.arguments与形参的同步 */
+    ;
+    (function () {
+        function doAdd(num1, num2) {
+            arguments[1] = 10;
+            alert(arguments[0] + num2);
+        }
+//       每次执行函数的时候都会重写第二个参数num2，但是并不是访问了相同的内存空间，他们的内存空间是独立的（栈存储？），但是值会同步。
+
+//        doAdd(3, 5)     //13
+//        doAdd(3)        //NaN
+//        如果只传入了一个参数,那么为 arguments[1]设置的值不会反应到命名参数中。
+//        这是因为 arguments 对象的长度是由传入的参数个数决定的,不是由定义函数时的命名 参数的个数决定的
+    })()
+
+
+
+        /* 48.call() */
+    ;
+    (function () {
+        function hello(thing) {
+//            console.log(this + " says hello " + thing);
+        }
+        hello.call("xiaoqiang", "world") //=> Yehuda says hello world
+    })()
+
 </script>
 </body>
 </html>
