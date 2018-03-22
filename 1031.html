@@ -910,6 +910,28 @@
         hello.call("xiaoqiang", "world") //=> Yehuda says hello world
     })()
 
+
+
+        /* 49.test */
+    ;
+    (function () {
+        function doAdd(){
+            var i = 1
+            i++
+//            console.log(i)
+            function inDoAdd(){
+                i++
+                console.log(i)
+            }
+//            inDoAdd()
+//            inDoAdd()
+//            inDoAdd()
+        }
+//        doAdd()
+//        doAdd()
+//        doAdd()
+    })()
+
 </script>
 </body>
 </html>
