@@ -1,0 +1,41 @@
+<view class='wrap'>
+    <view class='content'>
+        <view class='header'>
+            <view class='title'>合生麒麟社-2号楼</view>
+            <view class='note'>运动健身-其它运动健身</view>
+            <image class='brand'></image>
+        </view>
+        <view class='list'>
+            <view class='item one-px-b'>
+                <image></image>
+                <view>北京市朝阳区望京街2号</view>
+            </view>
+            <view class='item one-px-b'>
+                <image></image>
+                <view>北京市朝阳区望京街2号</view>
+            </view>
+            <view class='item one-px-b'>
+                <image></image>
+                <view>北京市朝阳区望京街2号</view>
+            </view>
+            <view class='item one-px-b'>
+                <image></image>
+                <view>北京市朝阳区望京街2号</view>
+            </view>
+        </view>
+        <scroll-view scroll-x="true" class='scroller'>
+            <view class='pic-wrap'>
+            1
+                <!-- <image></image> -->
+            </view>            
+            <view class='pic-wrap'>
+            2
+                <!-- <image></image> -->
+            </view>
+            <view class='pic-wrap' style="background:red;">
+            3
+                <!-- <image></image> -->
+            </view>
+        </scroll-view>
+    </view>
+</view>
