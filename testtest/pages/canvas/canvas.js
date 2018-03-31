@@ -15,13 +15,19 @@ Page({
   },
 
   initCanvas: function(){
-    const ctx = wx.createCanvasContext('myCanvas')
-    ctx.setFillStyle('red')
-    ctx.fillRect(10, 10, 150, 75)
-    ctx.draw()
+    var ctx = wx.createCanvasContext('myCanvas')
+    // ctx.setFillStyle('red')
+    // ctx.fillRect(10, 10, 150, 75)
+    // ctx.draw()
     this.setData({
         ctx: ctx
     })
+    
+    // 画图区
+    var ctx = this.data.ctx
+    ctx.arc(100, 100, 50, 0, 2*Math.PI)
+    ctx.setFillStyle('#EEE')
+    ctx.fill()
   },
 
   start: function (e) {
@@ -123,6 +129,7 @@ Page({
       ctx.setTextAlign('right')
       ctx.setFontSize(50)
       ctx.fillText('50', 90, 90)
+      ctx.closePath()
         ctx.draw({
             reserve: true
         })

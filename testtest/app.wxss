@@ -1,4 +1,5 @@
 /**app.wxss**/
+@import "./utils/iconfont.wxss";  
 .container {
   height: 100%;
   display: flex;
@@ -8,3 +9,17 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 } 
+
+.one-px-b:after{
+    content: '';
+    height: 1px;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    transform: scaleY(0.4);
+    box-sizing: border-box;
+    pointer-events: none;
+    background: #eee;
+    position: absolute;
+    z-index: 1;
+}

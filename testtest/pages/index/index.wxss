@@ -1,5 +1,4 @@
 .wrap{
-    background: yellow;
     width: 100%;
     padding-top: 50rpx;
 }
@@ -7,32 +6,19 @@
 .content{
     margin: 0 auto;
     width: 660rpx;
-    background: #899;
-}
-
-.one-px-b:after{
-    content: '';
-    height: 1px;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    transform: scaleY(0.4);
-    box-sizing: border-box;
-    pointer-events: none;
-    background: #eee;
-    position: absolute;
-    z-index: 1;
 }
 
 .header{
-    background: green;
     position: relative;
-    width: 650rpx;
-    border-bottom: 1rpx dotted red;
+    width: 100%;
+    border-bottom: 1rpx dotted #777;
+    padding-bottom: 44rpx;
 }
 
 .title{
     font-size: 50rpx;
+    height: 80rpx;
+    line-height: 80rpx;
 }
 
 .note{
@@ -41,40 +27,38 @@
 }
 
 .brand{
-    width: 100rpx;
-    height: 100rpx;
+    /* width: auto; */
+    /* height: 100%;
+     */
+    max-height: 120rpx;
+    max-width: 120rpx;
     position: absolute;
     right: 0;
-    top: 0;
-    background: red;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .list{
-    background: #906;
+    margin-bottom: 20rpx;
 }
 
 .item{
     display: flex;
     position: relative;
+    padding: 15rpx 0;
 }
 
 .item image{
     width: 50rpx;
     height: 50rpx;
-    background: #fff;
 }
 
 .item view{
-    background: blue;
     height: 50rpx;
 }
 
 .scroller{
-    background: #990;
-    /* width: 100%;  */
-    /* width: 660rpx; */
-    /* height: 200rpx; 
-    display: block; */
+    font-size: 0;
     white-space: nowrap;
 } 
 
@@ -83,3 +67,21 @@
     height: 200rpx;
     display: inline-block;
 } 
+
+.pic-wrap image{
+    width: 100%;
+    height: 100%;
+}
+
+.iconfont{
+    margin-right: 15rpx;
+}
+
+.icon-go{
+    height: 100%;
+    color: #777;
+}
+
+.text{
+    flex: 1;
+}

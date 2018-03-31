@@ -2,8 +2,8 @@
 bindtouchstart='start' 
 bindtouchmove='move' 
 bindtouchend='end'></canvas>
-<view style="width:100%;height:100rpx;line-height:100rpx;background:red;font-size:30rpx;text-align:center;">Coordinates: ({{x}}, {{y}})</view>
+<!-- <view style="width:100%;height:100rpx;line-height:100rpx;background:red;font-size:30rpx;text-align:center;">Coordinates: ({{x}}, {{y}})</view>
 <button type='primary' bindtap='saveImage'>保存图片</button>
 <button type='warn' bindtap='putImageData'>putImageData</button>
 <button type='primary' bindtap='getImageData'>getImageData</button>
-<button type='warn' bindtap='setFontSize'>setFontSize</button>
+<button type='warn' bindtap='setFontSize'>setFontSize</button> -->
