@@ -36,10 +36,12 @@
     right: 0;
     top: 50%;
     transform: translateY(-50%);
+    border-radius: 50%; 
 }
 
 .list{
     margin-bottom: 8rpx;
+    font-size: 33rpx;
 }
 
 .item{
@@ -54,7 +56,7 @@
 }
 
 .item view{
-    height: 50rpx;
+    height: 56rpx;
 }
 
 .scroller{
@@ -89,4 +91,5 @@
 
 .text{
     flex: 1;
+    line-height: 50rpx;
 }

@@ -1,28 +1,28 @@
 <view class='wrap'>
     <view class='content'>
         <view class='header'>
-            <view class='title'>士强银行</view>
-            <view class='note'>大众美男典范霍士强</view>
+            <view class='title'>音海乐器</view>
+            <view class='note'>教育学校-培训</view>
             <image class='brand' src='../../resources/img/shangbiao.jpg'></image>
         </view>
         <view class='list'>
             <view class='item one-px-b' bindtap='goThere'>
                 <view class='iconfont icon-coordinates'></view>
-                <view class='text'>北京市天安门广场</view>
+                <view class='text'>石家庄市桥西区音海乐器店</view>
                 <view class='icon-go'></view>
             </view>
             <view class='item one-px-b'>
                 <view class='iconfont icon-time'></view>
-                <view class='text'>22:00-03:30</view>
+                <view class='text'>08:00-21:00</view>
             </view>
             <view class='item one-px-b' bindtap='makeCall'>
                 <view class='iconfont icon-mobilephone'></view>
-                <view class='text'>15766666666</view>
+                <view class='text'>{{ phoneNumber }}</view>
                 <view class='icon-go'></view>                
             </view>
             <view class='item'>
                 <view class='iconfont icon-picture'></view>
-                <view>本人照片</view>
+                <view>学员风采</view>
             </view>
         </view>
         <scroll-view scroll-x="true" class='scroller'>
@@ -31,6 +31,4 @@
             </view>                
         </scroll-view>
     </view>
-
-    <canvas bindtap='closeCanvas' canvas-id="onecanvas" wx:if="{{ canvasShow }}" style='position:fixed;left:0;bottom:0;width:100%;height:100%;background:#000;'></canvas>
 </view>

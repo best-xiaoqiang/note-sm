@@ -11,7 +11,7 @@ Page({
 
   initCanvas: function(url, wh){
     var w = this.data.windowW
-    var h = this.data.windowW * this.data.wh
+    var h = this.data.windowW * wh
     var top = this.data.windowH / 2 - (h) / 2
     const ctx = wx.createCanvasContext('onecanvas')
     ctx.drawImage(url, 0, top, w, h)
@@ -19,11 +19,17 @@ Page({
   },
 
   initSys: function(){
-    var windowW = wx.getSystemInfoSync('windowWidth')
-    var windowH = wx.getSystemInfoSync('windowHeight')
+    var windowW = wx.getSystemInfoSync().windowWidth
+    var windowH = wx.getSystemInfoSync().windowHeight
     this.setData({
       windowW: windowW,
       windowH: windowH
+    })
+  },
+
+  backHome: function(){
+    wx.navigateBack({
+      delta: 1
     })
   },
 

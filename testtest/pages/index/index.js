@@ -10,27 +10,27 @@ Page({
         '../../resources/img/2.jpg',
         '../../resources/img/3.jpg',
         '../../resources/img/4.jpg',
+        '../../resources/img/5.jpg',
+        '../../resources/img/6.jpg',
     ],
     viewPic: {
         url: '',
         w: 0,
         h: 0
     },
-    canvasShow:false,
-    windowW: 375,
-    windowH: 993
+    phoneNumber: '15630450167'
   },
 
   goThere: function(){
     wx.openLocation({
-        latitude: 0,
-        longitude: 0,
+        latitude: 38.0136410621,
+        longitude: 114.4716650248
     })
   },
 
   makeCall: function(){
     wx.makePhoneCall({
-        phoneNumber: '15633398231',
+        phoneNumber: this.data.phoneNumber,
     })
   },
 
@@ -52,9 +52,6 @@ Page({
             this.setData({
                 viewPic: viewPic
             })
-            var w = this.data.windowW
-            var h = this.data.windowW * this.data.viewPic.wh
-            var top = this.data.windowH / 2 - (h)/2
             wx.navigateTo({
               url: `/pages/detail/detail?url=${url}&wh=${this.data.viewPic.wh}`
             })
