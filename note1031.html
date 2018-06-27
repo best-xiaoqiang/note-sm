@@ -1118,7 +1118,7 @@
     })()
 
 
-    /* defineProperty */
+    /* 55.defineProperty */
     ;(function () {
 
         var obj = {
@@ -1145,6 +1145,83 @@
             // obj.name += obj.name
         }, 2000)
 
+    })()
+
+    /* 56.组合继承 */
+    ;(function () {
+        function Person(name) {
+            this.name = name
+        }
+        Person.prototype.sayName = function () {
+            console.log('name', this.name)
+        }
+
+        function Student(name, grade) {
+            // 1. 继承属性
+            Person.call(this, name)
+            this.grade = grade
+        }
+        // 2.继承方法
+        Student.prototype = new Person()
+        Student.prototype.sayGrade = function () {
+            console.log('grade', this.grade)
+        }
+
+        var tom = new Student('汤姆', '六年级')
+        // tom.sayName()
+        // tom.sayGrade()
+
+    // 寄生组合继承？？
+    })()
+
+    /* 57.arguments.callee */
+    ;(function () {
+        // 普通的递归
+        function lesser(num) {
+            if(num>0){
+                num--
+                console.log(num)
+                lesser(num)
+            }else{
+                console.log('finished')
+            }
+        }
+        // lesser(6)
+        var lesser2 = lesser
+        lesser = null
+        // lesser2(6)      // 报错、因为递归中所使用的lesser已经被赋值为null
+
+    //    不普通的递归：
+        function goodLesser(num) {
+            if(num>0){
+                num--
+                console.log(num)
+                arguments.callee(num)   // arguments.callee指的就是本函数
+            }else{
+                console.log('finished')
+            }
+        }
+        // goodLesser(6)
+        var goodLesser2 = goodLesser
+        goodLesser = null
+        // goodLesser2(6)      // 正常
+
+    //    但是在严格模式下会报错
+
+
+    //    更好的实现，利用匿名函数：
+        var bestLesser = (function f(num) {
+            if(num>0){
+                num--
+                console.log(num)
+                f(num)
+            }else{
+                console.log('finished')
+            }
+        })
+        var bestLesser2 = bestLesser
+        bestLesser = null
+        // bestLesser2(6)      // 超级正常
     })()
 
 
