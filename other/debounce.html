@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>debounce and throttle</title>
+    <style>
+        .wrap{
+            width: 300px;
+            height: 300px;
+            background: orangered;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrap"></div>
+
+<script>
+    var wrap = document.getElementsByClassName('wrap')[0]
+    wrap.addEventListener('mousemove', function (event) {
+        var {offsetX, offsetY} = event
+        // console.log('event', event)
+        // handle(offsetX, offsetY)()
+        debounce(handle(offsetX, offsetY), 1000)()
+    })
+
+    function debounce(fn, wait) {
+        console.log('debounce')
+        var timeout = null
+        return function () {
+            if(timeout !== null){
+                clearTimeout(timeout)
+            }
+            timeout = setTimeout(fn, wait)
+        }
+    }
+
+    function handle(x, y) {
+        return function(){
+            console.log('offsetX', x, 'offsetY', y)
+        }
+    }
+</script>
+</body>
+</html>

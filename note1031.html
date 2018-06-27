@@ -451,11 +451,11 @@
 
 
 
-        /* 27.symbol() */
+        /* 27.Symbol */
     ;
     (function () {
         var s = Symbol()
-//        console.log('typeof s:', typeof s)
+        // console.log('typeof s:', typeof s)
         var s1 = Symbol('haha')
 //        console.log('typeof s1:', typeof s1)
         s1.toString()
@@ -463,8 +463,10 @@
 
         var a = Symbol('a')
         var b = Symbol('a')
-//        console.log('a:', a)        //Symbol(a)
-//        console.log('b:', b)        //Symbol(a)
+        // console.log('a:', a)        //Symbol(a)
+        // console.log('b:', b)        //Symbol(a)
+        
+
 //        console.log('==?', a==b)    //false
 //        console.log('===?', a===b)  //false
 
@@ -931,6 +933,220 @@
 //        doAdd()
 //        doAdd()
     })()
+
+
+
+        /* 50.一维数组和对象的深拷贝 */
+    ;
+    (function () {
+//        一维>>>>>
+//        数组： arr.slice()、arr.concat()、Array.from(arr)
+//        对象： Object.assign({}, obj)
+
+        var arr = [1,2,3,4]
+
+//        var arr1 = arr.slice()
+//        console.log(arr)
+//        console.log(arr1)
+//        arr1[0] = 9
+//        console.log(arr)
+//        console.log(arr1)
+
+//        var arr2 = arr.concat()
+//        console.log(arr)
+//        console.log(arr2)
+//        arr2[0] = 9
+//        console.log(arr)
+//        console.log(arr2)
+
+//        var arr3 = Array.from(arr)
+//        console.log(arr)
+//        console.log(arr3)
+//        arr3[0] = 9
+//        console.log(arr)
+//        console.log(arr3)
+
+//        var obj = {name:'xiaoqiang', age: 18}
+//        var obj1 = Object.assign({}, obj)
+//        console.log(obj, obj1)
+//        obj1.name = '小明'
+//        console.log(obj, obj1)
+    })()
+
+
+
+        /* 51.多维深拷贝 */
+    ;
+    (function () {
+//        JSON.parse(JSON.stringify(obj))
+//        缺点：不能深拷贝含有undefined、function、symbol值的对象
+//
+        var obj = {
+            x: {
+                a: '小明',
+                b: '小强'
+            },
+            y: undefined,
+            z: function add(z1, z2) {
+                return z1 + z2
+            },
+            a: Symbol("foo")
+        }
+        var result = JSON.parse(JSON.stringify(obj))
+//        console.log('obj:', obj)
+//        console.log('result:', result)
+//        result.x.a = '吃吃吃吃'
+//        console.log('obj:', obj)
+//        console.log('result:', result)
+
+
+
+//        复制的一个方法：
+        function deepCopy(obj) {
+            // 创建一个新对象
+            let result = {}
+            let keys = Object.keys(obj),
+                    key = null,
+                    temp = null;
+
+            for (let i = 0; i < keys.length; i++) {
+                key = keys[i];
+                temp = obj[key];
+                // 如果字段的值也是一个对象则递归操作
+                if (temp && typeof temp === 'object') {
+                    result[key] = deepCopy(temp);
+                } else {
+                    // 否则直接赋值给新对象
+                    result[key] = temp;
+                }
+            }
+            return result;
+        }
+
+        var obj1 = {
+            x: {
+                m: 1
+            },
+            y: undefined,
+            z: function add(z1, z2) {
+                return z1 + z2
+            },
+            a: Symbol("foo")
+        };
+
+        var obj2 = deepCopy(obj1);
+        obj2.x.m = 2;
+
+//        console.log(obj1); //{x: {m: 1}, y: undefined, z: ƒ, a: Symbol(foo)}
+//        console.log(obj2); //{x: {m: 2}, y: undefined, z: ƒ, a: Symbol(foo)}
+
+//        var arr1 = [1,2,3,[4,5,6]]
+//        var arr2 = deepCopy(arr1)
+//        arr2[3][0] = 999
+//        console.log(arr1)
+//        console.log(arr2)
+
+//-------------------------------------------------------------------------------
+
+    })()
+
+
+
+        /* 52.封装console.log */
+    ;
+    (function () {
+        function log(){
+            var newArguments = []
+            if(arguments.length > 0){
+                for(var i = 0; i < arguments.length; i++){
+                    newArguments.push('iphone',arguments[i])
+                }
+            }
+            console.log.apply(console,newArguments)
+        }
+//        log('哈哈哈')
+
+    })()
+
+
+    /* 53.作用域和原型链 */
+    ;
+    (function () {
+        return;     // 这个不用的时候要return出去，否则会影响其它小朋友！！！！
+
+        // 先查找的作用域链， 然后查找的原型链？
+        function foo() {
+            var x = 10
+            return function bar() {
+                // var y = 20
+                return function inner() {
+                    // var y = 21
+                    var z = 30
+                    console.log('x', x, 'y', y, 'z', z)
+                }
+            }
+        }
+        Object.prototype.x = 111
+        Object.prototype.y = 222
+        Object.prototype.z = 333
+        foo()()()
+
+    })()
+
+
+    /* 54.不用循环快速创建数组 */
+    ;(function () {
+        return
+//稀疏数组
+        var array = new Array(3);
+        array[2] = "name";
+        for(var a in array)
+        {
+            console.log("index=" + a + ",value=" + array[a]);
+        }
+// 密集数组
+        var dense = Array.apply(null, Array(3));
+        dense[2] = "name";
+        for(var a in dense)
+        {
+            console.log("index=" + a + ",value=" + dense[a]);
+        }
+
+        var result = dense.map(item=>9)
+        console.log('result:', result)
+
+    })()
+
+
+    /* defineProperty */
+    ;(function () {
+
+        var obj = {
+            name: '小强'
+        }
+        var objTemp = Object.assign({}, obj)
+
+        Object.defineProperty(obj, 'name', {
+            get: function() {
+                return objTemp.name
+            },
+            set: function(newVal){
+                objTemp.name = newVal
+                onNameChange(newVal)
+            }
+        })
+
+        function onNameChange(newVal) {
+            console.log('name更新为'+newVal)
+            console.log('obj:', obj)
+        }
+
+        setInterval(()=>{
+            // obj.name += obj.name
+        }, 2000)
+
+    })()
+
 
 </script>
 </body>
