@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        ul{
+            list-style: none;
+        }
+
+        #div1{
+            width: 200px;
+            height: 200px;
+            background: #cccccc;
+            border: 1px solid #22aa22;
+            display: none;
+        }
+
+        #div2{
+            width: 100px;
+            height: 100px;
+            background: red;
+            display: none;
+        }
+
+        div{
+            width: 100px;
+            height: 100px;
+            background: greenyellow;
+        }
+
+        .float-left{
+            float: left;
+            width: 100px;
+            height: 100px;
+            border: 1px solid green;
+            margin-right: 10px;
+        }
+
+        #div3{
+            background: yellow;
+        }
+
+        /*无缝滑动*/
+        #wrap1{
+            width: 400px;
+            height: 100px;
+            background: yellow;
+            position: relative;
+            margin: 116px auto 10px;
+            overflow: hidden;
+        }
+
+        #wrap1-ul{
+            font-size: 0;
+            position: absolute;
+        }
+
+        #wrap1-ul li{
+            width: 100px;
+            height: 100px;
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        #wrap1-ul li img{
+            width: 100%;
+            height: 100%;
+        }
+
+        #ul2 li{
+            width: 100px;
+            height: 10px;
+        }
+
+        #ul3 li{
+            width: 500px;
+            height: 20px;
+            background: pink;
+        }
+        
+        #div6{
+            width: 50px;
+            height: 50px;
+            background: green;
+            display: none;
+            position: absolute;
+        }
+        
+
+
+    </style>
+    <!--<link rel="stylesheet" href="">-->
+    <script>
+        window.onload = function () {
+            console.log('window.onload')
+
+            var divsDom = document.getElementsByTagName('div')
+            var len = divsDom.length
+            for (var i=0; i<len; i++){
+                divsDom[i].style.background = 'yellow'
+            }
+
+            // 1.传参数个数不同， 功能不同
+            function css(obj, name, value) {
+                if(arguments.length == 2){
+                    return obj.style[name]
+                }else{
+                    obj.style[name] = value
+                }
+            }
+            var div3Dom = document.getElementById('div3')
+            console.log('css', css(div3Dom, 'background'))
+            css(div3Dom, 'background', 'green')
+
+
+        //    2.延时消失
+            ;(function () {
+                var timer = null
+                var div4Dom = document.getElementById('div4')
+                var div5Dom = document.getElementById('div5')
+                div4Dom.onmouseover = div5Dom.onmouseover = function () {
+                    clearTimeout(timer)
+                    div5Dom.style.display = 'block'
+                }
+                div4Dom.onmouseout = div5Dom.onmouseout = function () {
+                    timer = setTimeout(function () {
+                        div5Dom.style.display = 'none'
+                    }, 500)
+                }
+            })()
+
+
+            /* 3.无缝滑动/轮播图 */
+            ;(function () {
+                var timer = null
+                var ulDom = document.getElementById('wrap1-ul')
+                ulDom.innerHTML += ulDom.innerHTML
+                var lisDom = ulDom.getElementsByClassName('wrap1-ul-li')
+                ulDom.style.width = lisDom[0].offsetWidth*lisDom.length + 'px'
+                speed = -3
+
+                function move() {
+                    if(ulDom.offsetLeft <= -ulDom.offsetWidth/2){
+                        ulDom.style.left = 0
+                    }else if(ulDom.offsetLeft >= 0){
+                        ulDom.style.left = -ulDom.offsetWidth/2 + 'px'
+                    }
+                    ulDom.style.left = ulDom.offsetLeft + speed + 'px'
+                }
+
+                timer = setInterval(move, 50)
+
+                ulDom.onmouseover = function () {
+                    clearInterval(timer)
+                }
+                ulDom.onmouseout = function () {
+                    timer = setInterval(move, 50)
+                }
+            })()
+
+
+            /* 4.childNodes 和 children */
+            // nodeType == 1  元素节点
+            //    children不会获得文本节点
+            ;(function () {
+                var ulDom = document.getElementById('ul2')
+                // alert(ulDom.childNodes.length)  // 9
+                var len = ulDom.childNodes.length
+                // childNodes:
+                for (var i=0; i<len; i++){
+                    // console.log(ulDom.childNodes[i].nodeType)
+
+                    if(ulDom.childNodes[i].nodeType == 1){
+                        ulDom.childNodes[i].style.background = 'blue'
+                    }
+                }
+            //    children不会获得文本节点
+            })()
+
+
+
+            /* 5.创建li
+            *
+            *   appendChild 插在最后面
+            *   insertBefore 插在谁前面
+            * */
+            ;(function () {
+                var btn = document.getElementById('btn1')
+                var ul = document.getElementById('ul3')
+                var input = document.getElementById('input1')
+                var lis = ul.getElementsByTagName('li')
+                btn.onclick = function () {
+                    var li = document.createElement('li')
+                    li.innerHTML = input.value
+                    // ul.appendChild(li)      // appendChild插在最后面
+
+                    if(lis.length>0){
+                        ul.insertBefore(li, lis[0])
+                    }else{
+                        ul.appendChild(li)
+                    }
+
+                    input.value = ''
+                }
+            })()
+
+
+            /* 6.li排序
+            *
+            * appendChild的作用：
+            *   1. 删除原有节点
+            *   2. 插入节点
+            *
+            * 排序思路：
+            *   将节点数组排序成功之后，
+            *   再依次appendChild就能得到想要的顺序
+            *
+            * */
+            ;(function () {
+                var ulDom = document.getElementById('ul4')
+                var btnDom = document.getElementById('btn2')
+                var lisDom = ulDom.getElementsByTagName('li')
+                var lisArr = []
+                var len = lisDom.length
+                for (var i=0; i<len; i++){
+                    lisArr[i] = lisDom[i]   // lisDom不能直接使用sort方法
+                }
+                lisArr.sort(function (li1, li2) {
+                    var n1 = li1.innerHTML
+                    var n2 = li2.innerHTML
+                    return n1-n2
+                })
+                btnDom.onclick = function () {
+                    for (var i=0; i<len; i++){
+                        ulDom.appendChild(lisArr[i])
+                    }
+                }
+            })()
+
+
+            /* 7.event、取消冒泡*/
+            ;(function () {
+                document.onclick = function (e) {
+                    var event = e || event
+                    // event.cancelBubble = true   // 取消冒泡
+                    console.log(event.clientX, event.clientY)
+                }
+            })()
+
+
+            /* 8.提交留言 ctrl+enter */
+            ;(function () {
+                var inputDom = document.getElementById('input2')
+                var textDom = document.getElementById('textarea1')
+                inputDom.onkeydown = function (e) {
+                    var event = e || event
+                    if(event.keyCode === 13 && event.ctrlKey){
+                        textDom.value += inputDom.value + '\n'
+                        inputDom.value = ''
+                    }
+                }
+            })()
+
+
+            /* 9. 默认行为 */
+            ;(function () {
+                // 阻止右键菜单
+                var divDom = document.getElementById('div6')
+
+                document.oncontextmenu = function (e) {
+                    var event = e || event
+                    divDom.style.display = 'block'
+                    divDom.style.left = event.clientX + 'px'
+                    divDom.style.top = event.clientY + 'px'
+
+                    return false
+                }
+
+                document.onclick = function () {
+                    divDom.style.display = 'none'
+                }
+            })()
+
+
+        }
+    </script>
+</head>
+<body>
+<!--
+    javascript：实现某种动态效果
+    事件：用户操作
+-->
+<input type="checkbox" onmouseenter="checkBoxFocus()" onmouseout="checkBoxUnfocus()" title="title"/>
+<div id="div1">为了你的信息安全</div>
+
+<input type="button" value="显示隐藏" onclick="buttonTap()">
+<div id="div2"></div>
+
+<!--不会跳到上面-->
+<a href="javascript:;">链接</a>
+
+<div class="float-left"></div>
+<div class="float-left"></div>
+<div class="float-left"></div>
+<div class="float-left" id="div3"></div>
+
+<br>
+<br>
+<hr>
+
+<!-- 延时消失 -->
+<div class="float-left" id="div4"></div>
+<div class="float-left" id="div5" style="display: none;"></div>
+<br>
+
+<!-- 无缝滚动 -->
+<div id="wrap1">
+    <ul id="wrap1-ul">
+        <li class="wrap1-ul-li"><img src="https://dl.weshineapp.com/gif/20180709/1531128444_5b432a7cb2518.png" title="1"></li>
+        <li class="wrap1-ul-li"><img src="https://dl.weshineapp.com/gif/20180709/1531128444_5b432a7cb2518.png" title="2"></li>
+        <li class="wrap1-ul-li"><img src="https://dl.weshineapp.com/gif/20180709/1531128444_5b432a7cb2518.png" title="3"></li>
+        <li class="wrap1-ul-li"><img src="https://dl.weshineapp.com/gif/20180709/1531128444_5b432a7cb2518.png" title="4"></li>
+    </ul>
+</div>
+
+<!-- childNodes 和 children-->
+<ul id="ul2">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+
+<!-- 创建li -->
+<input id="input1" type="text">
+<button id="btn1">创建li</button>
+<ul id="ul3"></ul>
+
+<!-- 表格排序 -->
+<button id="btn2">排序</button>
+<ul id="ul4">
+    <li>88</li>
+    <li>66</li>
+    <li>8</li>
+    <li>974</li>
+    <li>2</li>
+</ul>
+
+<!-- 快捷键发布留言 -->
+<input id="input2" type="text" style="width: 100px;" />
+<textarea name="textarea1" id="textarea1" cols="20" rows="5"></textarea>
+
+<!-- 自定义右键菜单 -->
+<div id="div6">右键菜单</div>
+
+
+    <script>
+        var div1Dom = document.getElementById('div1')
+        var div2Dom = document.getElementById('div2')
+        function checkBoxFocus() {
+            div1Dom.style.display = 'block'
+        }
+        function checkBoxUnfocus() {
+            div1Dom.style.display = 'none'
+        }
+
+        function buttonTap() {
+            if(div2Dom.style.display == 'block'){
+                div2Dom.style.display = 'none'
+            }else{
+                div2Dom.style.display = 'block'
+            }
+        }
+
+        div2Dom.onclick = function () {
+            alert('onclick')
+        }
+
+    </script>
+
+</body>
+
+</html>

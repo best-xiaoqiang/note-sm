@@ -1225,6 +1225,19 @@
     })()
 
 
+    /* 58.全局变量和window的属性的区别 */
+    // var globalDataA = 'i am global data a'
+    // window.globalDataB = 'i am global data b'
+    // delete  window.globalDataA  // false. 通过var声明的window的属性的configurable属性为false
+    // delete  window.globalDataB  // true
+    // if(window.aUndefinedDataA){
+    //     console.log('dddddddddddd')
+    // }
+    // if(aUndefinedDataB){
+    //     console.log('ssssssssss')
+    // }
+
+
 </script>
 </body>
 </html>
