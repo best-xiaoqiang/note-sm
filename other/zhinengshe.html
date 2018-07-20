@@ -91,6 +91,15 @@
             display: none;
             position: absolute;
         }
+
+        #div7{
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            left: 0;
+            top: 150px;
+            z-index: 99;
+        }
         
 
 
@@ -103,7 +112,7 @@
             var divsDom = document.getElementsByTagName('div')
             var len = divsDom.length
             for (var i=0; i<len; i++){
-                divsDom[i].style.background = 'yellow'
+                // divsDom[i].style.background = 'yellow'
             }
 
             // 1.传参数个数不同， 功能不同
@@ -288,6 +297,110 @@
             })()
 
 
+            /* 10.拖拽 */
+            ;(function () {
+                var divDom = document.getElementById('div7')
+                var disX = 0
+                var disY = 0
+                divDom.onmousedown = function (e) {
+                    var event = e || event
+                    disX = event.clientX - divDom.offsetLeft
+                    disY = event.clientY - divDom.offsetTop
+
+                    document.onmousemove = function (e) {
+                        var event = e || event
+                        var l = event.clientX - disX
+                        var t = event.clientY - disY
+                        if(l<0){
+                            l = 0
+                        }else if (l>document.documentElement.clientWidth - divDom.offsetWidth){
+                            l = document.documentElement.clientWidth - divDom.offsetWidth
+                        }
+                        if(t<0){
+                            t = 0
+                        }else if(t>document.documentElement.clientHeight - divDom.offsetHeight){
+                            t = document.documentElement.clientHeight - divDom.offsetHeight
+                        }
+                        divDom.style.left = l + 'px'
+                        divDom.style.top = t + 'px'
+
+                        return false  // 解决火狐的bug
+                    }
+
+                    document.onmouseup = function () {
+                        document.onmousemove = null
+                        document.onmouseup = null
+                    }
+                }
+            })()
+
+
+            /* 11.事件绑定
+             *
+              * 用xxx.onclick = function(){}的缺点：
+              *     类似于赋值，容易发生覆盖
+              * */
+            ;(function () {
+                var divDom = document.getElementById('div7')
+                // 兼容
+                if(divDom.attachEvent){
+                    divDom.attachEvent('onclick', function () {
+                        console.log('attachEvent')
+                    })
+                }else{
+                    divDom.addEventListener('click', function () {
+                        console.log('addEventListener')
+                    })
+                }
+
+            })()
+
+
+            /* 12.ajax */
+            ;(function () {
+                return
+
+                // https://mp.weshineapp.com/2.0/voice/feeds?timestamp=1530697411&sign=655b7d5dd44069fd43db816ffcc72e23&h=b20ab7c6-6b4f-4316-af83-18aa2a732131&v=3.4.80
+                var url = 'https://mp.weshineapp.com/2.0/voice/feeds?timestamp=1530697411&sign=655b7d5dd44069fd43db816ffcc72e23&h=b20ab7c6-6b4f-4316-af83-18aa2a732131&v=3.4.80'
+
+                /*
+                * 阻止ajax缓存：
+                * 只要让url每次都不同。加时间戳
+                * */
+
+            //    1. 创建ajax对象
+                if (window.XMLHttpRequest){
+                    var ajax = new XMLHttpRequest()     // 非ie6
+                } else{
+                    var ajax = new ActiveXObject('Microsoft.XMLHTTP')   // ie6
+                }
+                // alert(ajax)
+
+            //    2. 连接服务器
+                ajax.open('GET', url, true)     // 方法、 文件名、 异步
+
+            //    3. 发送请求
+                ajax.send()
+
+            //    4. 接收返回
+                ajax.onreadystatechange = function () {
+                    if(ajax.readyState == 4){   // 浏览器和服务器进行到哪一步了
+                        if(ajax.status == 200){
+                            console.log('成功', ajax.responseText)
+                        }else{
+                            console.log('失败', ajax.status)
+                        }
+                    }
+                }
+            })()
+
+
+            /* 13. 面向对象 */
+            ;(function () {
+
+            })()
+
+
         }
     </script>
 </head>
@@ -358,6 +471,9 @@
 
 <!-- 自定义右键菜单 -->
 <div id="div6">右键菜单</div>
+
+<!-- 拖拽 -->
+<div id="div7" style="background: gray;"></div>
 
 
     <script>
