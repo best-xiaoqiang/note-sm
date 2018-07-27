@@ -85,6 +85,8 @@ b才会出现偷看行为，进而使自身的值和a的值一样。
 
 **我在d盒子里放个房子**...
 
+![](https://user-gold-cdn.xitu.io/2018/7/26/164d6127f02ec954?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+
 问题出现了，
 
 之前，我们在盒子里放一些很傻很天真的东西，基本没问题，
@@ -102,6 +104,8 @@ b才会出现偷看行为，进而使自身的值和a的值一样。
 而且常识告诉你：
 
 房子里倒是能**堆**很多的盒子，因此房子就是堆存储。
+
+![](https://user-gold-cdn.xitu.io/2018/7/26/164d6177fc997366?imageslim)
 
 堆存储就像找了一片空地，然后在上面尽情放盒子（*请不要想到《我的世界》*）。
 
@@ -210,6 +214,8 @@ a盒子里面放很傻很天真的钥匙，这把钥匙对应一个大房子。
 
 引用类型的直接赋值就是把钥匙放到对应盒子里。
 
+![](https://user-gold-cdn.xitu.io/2018/7/26/164d657c0000e014?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+
 ##### 为什么只给盒子起名字？
 
 代码中，会出现很频繁的变量赋值行为，
@@ -246,6 +252,8 @@ console.log(obj2)   // {name: '小强'}
 
 盒子obj2偷看一眼盒子obj中放的东西，复制一下，自己里面放同样的东西。
 
+![](https://user-gold-cdn.xitu.io/2018/7/26/164d669d9d0a9cc8?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+
 喜出望外的是，竟然是一把对应某个房间的钥匙！
 
 这时，obj2就和obj一样，都能访问这把钥匙对应的房间了。
@@ -272,11 +280,15 @@ console.log(b.x)    // {n: 2}
 
 房子里有个盒子n，放着1。
 
+![](https://user-gold-cdn.xitu.io/2018/7/27/164da101713dc5b7?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+
 2. `var b = a`
 
 取一个盒子名b，盒子b偷看一下盒子a，哇哦，一把钥匙，
 
 盒子b里面也有了这把钥匙，也能去访问这个房间了。
+
+![](https://user-gold-cdn.xitu.io/2018/7/27/164da106b5215eff?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
 
 3. `a.x = a = {n: 2}`
 
@@ -335,6 +347,8 @@ console.log(b.x)    // {n: 2}
 
 后面的代码，只能影响这个盒子里放什么东西。
 
+![](https://user-gold-cdn.xitu.io/2018/7/27/164da117597d2245?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+
 于是，时过境迁：
 
 盒子a里，抛弃旧房子钥匙，放进了一把新房子钥匙，等价于
@@ -380,6 +394,8 @@ console.log(xiaoQiang.keyBox)    // {moneyBox: 200}
 
 小明在此房子里做了一个钥匙柜，这个钥匙柜能自动生成一把小明口袋里的钥匙（**`xiaoMing.keyBox = xiaoMing`的作用，可能有点超现实**），
 
+![](https://user-gold-cdn.xitu.io/2018/7/27/164da1623af57545?imageslim)
+
 但是小明想，我口袋里的钥匙现在就是这个房子的钥匙，放在我的钥匙柜里也没什么意义，
 
 不如这样吧，我再买一套房子，**把口袋里的钥匙替换成新房子的钥匙**，那这个钥匙柜里不就存下新房子的钥匙了吗。
@@ -405,6 +421,8 @@ console.log(xiaoQiang.keyBox)    // {moneyBox: 200}
 而小强有小明旧房子的钥匙，
 
 同时这个房间里还有小明的新房子的钥匙，所以小强也能进小明的新房子。
+
+![](https://user-gold-cdn.xitu.io/2018/7/27/164da1ef0fc36bdf?imageslim)
 
 用代码表示，就相当于
 
