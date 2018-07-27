@@ -49,6 +49,8 @@ console.log(b)  // '苹果'
 
 给一个盒子起名为b，并偷看一下盒子a里面放的什么，然后自己里面放同样的东西。
 
+![](https://user-gold-cdn.xitu.io/2018/7/26/164d60b11f000cb2?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+
 当`a = ''`时，相当于：
 
 盒子a里面原来的东西不要了，改放一个`''`进去。
@@ -414,4 +416,4 @@ xiaoQiang = {
 }
 ```
 
-[点击查看此文章的最新版本和全部内容](https://github.com/best-xiaoqiang/note-sm)
+[点击查看此文章的最新版本和全部内容](https://github.com/best-xiaoqiang/note-sm/blob/master/README.md)
