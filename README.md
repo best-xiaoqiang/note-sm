@@ -1,5 +1,9 @@
 # 大众美男典范霍小强的笔记
 
+* [掘金账号](https://juejin.im/user/59647674a22b9d006a5df241/posts)
+* [博客园账号](http://www.cnblogs.com/best-xiaoqiang/)
+>**以上账号的文章可能会忘记更新，最新最全内容以这里为主**
+
 ## javascript赋值
 
 >赋值就是把某一个值赋给变量。
@@ -435,3 +439,9 @@ xiaoQiang = {
 ```
 
 [点击查看此文章的最新版本和全部内容](https://github.com/best-xiaoqiang/note-sm/blob/master/README.md)
+
+*** 
+
+## 原型和原型链
+
+
