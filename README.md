@@ -810,6 +810,9 @@ new在故事中不是“培训”的意思吗，这是不是说，其它的图�
 
 原型的constructor放的是该原型所属的函数对象，即每个图书室里都放在该图书室所属老师的联系方式，比如电话号码。
 
+* **小强校长帅吗？**
+
+颜值爆表。
 
 如果你有其它关心的事项，可以发表评论或者[联系我](https://github.com/best-xiaoqiang/note-sm/blob/master/image/lala.png)。
 
