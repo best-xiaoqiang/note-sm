@@ -4,6 +4,7 @@
 
 * [掘金账号](https://juejin.im/user/59647674a22b9d006a5df241/posts)
 * [博客园账号](http://www.cnblogs.com/best-xiaoqiang/)
+* [CSDN](https://blog.csdn.net/best_xiaoqiang)
 
 >**以上账号的文章可能会忘记更新，最新最全内容以这里为主**
 
