@@ -279,6 +279,8 @@
 
             /* 9. 默认行为 */
             ;(function () {
+                return;
+
                 // 阻止右键菜单
                 var divDom = document.getElementById('div6')
 
@@ -397,7 +399,69 @@
 
             /* 13. 面向对象 */
             ;(function () {
+                function sayHello() {
+                    console.log('hello')
+                }
+                // sayHello()
+                // sayHello.call()
 
+                function sayHi(a, b) {
+                    console.log(this, a, b)
+                }
+                // sayHi(1, 2)
+            })()
+
+            /* 14. 通过call继承属性 */
+            ;(function () {
+                return;
+
+                var aThisArr = []
+                function A() {
+                    this.abc = 12
+                    aThisArr.push(this)
+                }
+                var _thisArr = []
+                function B() {
+                    // 通过call继承属性
+                    A.call(this)    // 使B的this相当于A的this，执行A
+                    // console.log('A.call(this)', A.call(this))   // undefined.说明A.call(this)的方式不是new的方式
+                    _thisArr.push(this)
+                }
+                var obj = new B()
+                var obj2 = new B()
+                // 每次new的this都不相同，因为是先创建一个对象，然后让this引用该对象
+
+                console.log('_this === obj', _thisArr[0] === obj)     // new的时候返回的this
+                console.log('_this === obj2', _thisArr[1] === obj2)     // new的时候返回的this
+                console.log(aThisArr[0] === _thisArr[0])     // true.说明A.call(this)的方式把B的this传递进A了
+                console.log(aThisArr[1] === _thisArr[1])     // true.
+                console.log('obj.abc:', obj.abc)
+
+                // var objA = new A()
+                // console.log(objA)
+                // console.log('new A', new A)     // 返回值为对象。
+            })()
+
+
+            /* 15.document.write */
+            ;(function () {
+
+                // setTimeout(function () {
+                //     document.write('document.write会先把所有标签清空')
+                // }, 3000)
+            })()
+
+
+            /* 16.cookie */
+            ;(function () {
+                document.cookie = 'hello'
+                document.cookie = '吃饭'      // 不会覆盖，是添加
+                // alert(document.cookie)
+
+            //    求出几天后的日期
+                var myDate = new Date()
+                myDate.setDate(myDate.getDate() + 14)
+                // console.log(myDate)
             })()
 
 

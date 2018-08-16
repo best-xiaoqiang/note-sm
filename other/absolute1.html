@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用absolute和js模拟fixed</title>
+    <style>
+        body{
+            height: 5000px;
+        }
+        .fixed{
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+<div class="fixed">
+
+</div>
+
+<script>
+    var divDom = document.getElementsByClassName('fixed')[0]
+    window.onscroll = window.onresize = function () {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop   // 兼容crome
+        var top = scrollTop + document.documentElement.clientHeight - divDom.offsetHeight
+        // console.log('top', top)
+        divDom.style.top = top + 'px'
+    }
+</script>
+</body>
+</html>
