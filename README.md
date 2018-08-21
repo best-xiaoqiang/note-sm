@@ -6,8 +6,6 @@
 * [博客园账号](http://www.cnblogs.com/best-xiaoqiang/)
 * [CSDN](https://blog.csdn.net/best_xiaoqiang)
 
->**以上账号的文章可能会忘记更新，最新最全内容以这里为主**
-
 或者，也可以：
 
 * [联系我](https://github.com/best-xiaoqiang/note-sm/blob/master/image/lala.png)
@@ -1004,3 +1002,75 @@ foo()   // '小强'
 这就是JS版的《辛德勒名单》。
 
 *那么在这个过程中，你认为哪部分属于闭包呢？*
+
+### 补充
+
+* 2018/8/17
+
+假设满足上面的整个结构才是闭包，那么：
+
+闭包就是
+
+以函数嵌套为前提，
+
+以返回内部函数为手段，
+
+利用函数的独立作用域的特点、
+
+创建局部变量，以减少全局变量污染；
+
+利用垃圾回收机制只回收没有任何引用的对象的特点、
+
+而内部函数的作用域对外部变量对象有引用关系、
+
+同时内部函数被赋值给外部变量、JS不会自己去破坏其作用域，
+
+以此来保存和使用局部变量。
+
+被return出来的函数的作用域不消失的原因，
+
+和window下的函数的作用域不消失的原因是相同的。
+
+所以关键闭包的关键是，函数的作用域？
+
+***
+
+## 微信小程序开发笔记
+
+*开发过程中做过的和见到的*
+
+### 解决微信小程序页面路径最多只能十层
+
+很多时候，页面交互需要navigateTo而不是redirectTo，但是微信小程序的页面路径最多只能十层。
+
+到达十层之后，页面的redirect会失效，用户点不动就会很恼火。
+
+我的解决如下：
+
+```js
+export function navigateTo({url, success, fail, complete}){
+  var limit = 10  //微信限制的页面路径层数
+  var pageCount = getCurrentPages().length
+  if(pageCount < limit - 2){  //真机上需要额外留两层才能完成跳转
+    wx.navigateTo({
+      url,
+      success,
+      fail,
+      complete
+    })
+  }else{
+    //  路径到上限时reLaunch
+    url = `pages/index/index`   // 小程序的首页  
+    // 也可以在首页添加对options的处理，比如设置参数go，如果有的话decodeURIComponent并跳转
+    // url = `/pages/index/index?go=${encodeURIComponent(url)}`
+    wx.reLaunch({
+      url,
+      success,
+      fail,
+      complete
+    })
+  }
+}
+```
+
+### 

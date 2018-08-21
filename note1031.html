@@ -1237,6 +1237,62 @@
     //     console.log('ssssssssss')
     // }
 
+    /* 59.链式操作 */
+    ;(function () {
+        //    最简单的实现方法就是将当前的对象作为函数的返回值return出去。
+        // 把当前对象return出去
+        var CheckObject = function () {
+            this.checkName = function () {
+                console.log('name ok')
+                return this
+            }
+            this.checkEmail = function () {
+                console.log('email ok')
+                return this
+            }
+            this.checkPassword = function () {
+                console.log('password ok')
+                return this
+            }
+        }
+        var obj = new CheckObject()
+        // obj.checkName().checkEmail().checkPassword()
+    })()
+
+    /* 60.闭包测试 */
+    ;(function () {
+        return
+
+        //   验证：每次外部函数执行返回的内部函数的作用域读取的变量对象应该是不同的
+        // （因为这个外部函数的变量对象是这个外部函数执行的时候创建的）
+        function outter() {
+            var count = 1
+            return function () {
+                count++
+                console.log('count', count)
+            }
+        }
+        var fun = outter()
+        var foo = outter()
+        fun()   // 2
+        fun()   // 3
+        foo()   // 2. 是独立于fun()的。说明两个函数中对应的那个变量对象是两个不同的对象
+        fun()   // 4
+    })()
+
+
+    /* 61. 一道作用域题 */
+    ;(function () {
+        var d = 'Tom';
+        function zeta() {
+            if (d === undefined) {
+                var d = 'Jerry';
+            //    这里没有块级作用域，所以var d = 'Jerry'，变量提升导致zeta函数顶部已经有一个var d， d为undefined
+            }
+            console.log(d);
+        }
+        zeta();
+    })()
 
 </script>
 </body>
