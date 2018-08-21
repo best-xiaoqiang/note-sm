@@ -1283,6 +1283,9 @@
 
     /* 61. 一道作用域题 */
     ;(function () {
+
+        return
+
         var d = 'Tom';
         function zeta() {
             if (d === undefined) {
@@ -1292,6 +1295,32 @@
             console.log(d);
         }
         zeta();
+    })()
+
+    /* 62. Promise对象实现请求超时 */
+    ;(function () {
+
+        return
+
+        var p1 = new Promise(function (resolve, reject) {
+            var img = new Image()
+            img.onload = function () {
+                resolve(img)
+            }
+            img.src = 'xxxxx'
+        })
+        var p2 = new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                reject('图片请求超时')
+            }, 3000)
+        })
+        Promise.race([p1, p2])
+            .then(function (res) {
+                console.log('res', res)
+            })
+            .catch(function (reason) {
+                console.log('reason', reason)
+            })
     })()
 
 </script>

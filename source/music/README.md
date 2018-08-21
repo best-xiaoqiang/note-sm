@@ -146,7 +146,9 @@ ready() {
 }
 ```
 
-当`rotate`为`true`时，使`this.data.musicClass = 'music-on'`，就能实现旋转了。
+当`rotate`为`true`时，使`musicClass` 的值为`'music-on'`，就能实现旋转了。
+
+当然，在`musicClass`切换过程中需要用`this.setData`的方式。
 
 爆丑图：
 
