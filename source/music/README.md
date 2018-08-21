@@ -1,5 +1,7 @@
 # 微信小程序有旋转动画效果的音乐组件
 
+* [首页](https://github.com/best-xiaoqiang/note-sm)
+
 在微信开发中，写过的一个简单的音乐播放组件，记录下。
 
 ## music
@@ -237,4 +239,4 @@ detached() {
 你可以
 
 * 通过阅读本文，根据自身实际情况写一个
-* 或者，直接查看[文件的git地址]()
+* 或者，直接[凑合用](https://github.com/best-xiaoqiang/note-sm/tree/master/source/music)
