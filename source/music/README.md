@@ -148,6 +148,10 @@ ready() {
 
 当`rotate`为`true`时，使`this.data.musicClass = 'music-on'`，就能实现旋转了。
 
+爆丑图：
+
+![](https://user-gold-cdn.xitu.io/2018/8/21/1655b75618e7e9a3?w=280&h=356&f=gif&s=557565)
+
 ### 音乐控制
 
 #### 手动切换
