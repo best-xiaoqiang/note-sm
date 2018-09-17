@@ -1052,27 +1052,17 @@ foo()   // '小强'
 我的解决如下：
 
 ```js
-export function navigateTo({url, success, fail, complete}){
+export function navigateTo({url, ...data}){
   var limit = 10  //微信限制的页面路径层数
   var pageCount = getCurrentPages().length
   if(pageCount < limit - 2){  //真机上需要额外留两层才能完成跳转
-    wx.navigateTo({
-      url,
-      success,
-      fail,
-      complete
-    })
+    wx.navigateTo({ url, ...data })
   }else{
     //  路径到上限时reLaunch
     url = `pages/index/index`   // 小程序的首页  
     // 也可以在首页添加对options的处理，比如设置参数go，如果有的话decodeURIComponent并跳转
     // url = `/pages/index/index?go=${encodeURIComponent(url)}`
-    wx.reLaunch({
-      url,
-      success,
-      fail,
-      complete
-    })
+    wx.reLaunch({ url, ...data })
   }
 }
 ```

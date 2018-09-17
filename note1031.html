@@ -73,7 +73,7 @@
         /* 4.encodeURIComponent() */
     ;
     (function () {
-        var str='霍士强'
+        var str='小强'
         var result=encodeURIComponent(str)
 //        console.log('encode:', result)
         result=decodeURIComponent(result)
@@ -800,6 +800,8 @@
         /* 42.检测一个对象的类型 */
     ;
     (function () {
+        return
+
 //        console.log(typeof [1,2,3])                 //"object"
 //        console.log(typeof (new String('str')))     //"object"
 //        用typeof大多数返回的是“object”，并不能起到检测类型的作用
@@ -818,9 +820,8 @@
             res8: Object.prototype.toString.call(new Date())
         }
 
-        for(var i=1;i<=8;i++){
-            var res = 'res' + i
-//            console.log(obj[res])
+        for(var key in obj){
+            console.log(key + ':' + obj[key])
         }
     })()
 
@@ -917,6 +918,8 @@
         /* 49.test */
     ;
     (function () {
+        return
+
         function doAdd(){
             var i = 1
             i++
@@ -925,15 +928,14 @@
                 i++
                 console.log(i)
             }
-//            inDoAdd()
-//            inDoAdd()
-//            inDoAdd()
+           inDoAdd()
+           inDoAdd()
+           inDoAdd()
         }
-//        doAdd()
-//        doAdd()
-//        doAdd()
+       doAdd()
+       doAdd()
+       doAdd()
     })()
-
 
 
         /* 50.一维数组和对象的深拷贝 */
@@ -1102,14 +1104,14 @@
         array[2] = "name";
         for(var a in array)
         {
-            console.log("index=" + a + ",value=" + array[a]);
+            console.log("稀疏数组：" + "index=" + a + ",value=" + array[a]);
         }
 // 密集数组
         var dense = Array.apply(null, Array(3));
         dense[2] = "name";
         for(var a in dense)
         {
-            console.log("index=" + a + ",value=" + dense[a]);
+            console.log("密集数组：" + "index=" + a + ",value=" + dense[a]);
         }
 
         var result = dense.map(item=>9)

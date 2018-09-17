@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>flex and grid</title>
+    <style>
+        /*flex方式 start*/
+
+
+            /*
+                calc: 四则运算。(calculation计算)
+                vm: 相对视口宽度的百分比
+            */
+
+        /*
+        .box{
+            display: flex;
+            flex-direction: column;
+            background-color: red;
+            height: 800px;
+            padding: 10px;
+            width: calc(100vm - 20px);
+            padding-bottom: 0;
+            padding-right: 0;
+
+        }
+        .content{
+            flex: 1;
+            display: flex;
+            margin-bottom: 10px;
+        }
+        .b{
+            flex: 1;
+            background-color: yellow;
+            margin-right: 10px;
+        }
+        */
+
+
+        /*flex方式 end*/
+
+
+        /*grid方式 start*/
+
+        .box{
+            padding: 10px;
+            display: grid;
+            grid-template-columns: auto auto auto;
+            grid-template-rows: auto auto auto;
+            height: 780px;
+            background-color: red;
+            grid-gap: 10px;
+        }
+        .b{
+            background-color: yellow;
+        }
+
+        /*grid方式 end*/
+    </style>
+</head>
+<body>
+<!--flex方式 star-->
+    <!--
+    <div class="box">
+        <div class="content">
+            <div class="b"></div>
+            <div class="b"></div>
+            <div class="b"></div>
+        </div>
+        <div class="content">
+            <div class="b"></div>
+            <div class="b"></div>
+            <div class="b"></div>
+        </div>
+        <div class="content">
+            <div class="b"></div>
+            <div class="b"></div>
+            <div class="b"></div>
+        </div>
+    </div>
+    -->
+
+<!--flex方式 end-->
+
+<!--grid方式 start-->
+<div class="box">
+    <div class="b">1</div>
+    <div class="b">2</div>
+    <div class="b">3</div>
+    <div class="b">4</div>
+    <div class="b">5</div>
+    <div class="b">6</div>
+    <div class="b">7</div>
+    <div class="b">8</div>
+    <div class="b">9</div>
+</div>
+<!--grid方式 end-->
+
+
+</body>
+</html>

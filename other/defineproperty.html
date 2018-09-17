@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>defineproperty</title>
+</head>
+<body>
+    <script>
+        var obj = {}
+        var objTmp = {}         // defineproperty的get中return时候会用到
+        Object.defineProperty(obj, "name", {
+            value: '小强',
+            writable: false,
+            enumerable: false,
+            configurable: true
+        })
+        obj.name = '小明'
+//        console.log('obj', obj)
+
+        Object.defineProperty(obj, "age", {
+            set: function (newVal) {
+                console.log('newVal:', newVal)
+                objTmp.age = newVal
+            },
+            get: function(){
+                console.log('get obj.age:', objTmp.age)
+                return objTmp.age
+            }
+        })
+
+        obj.age = 20
+        console.log('obj.age:', obj.age)
+    </script>
+</body>
+</html>
