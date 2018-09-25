@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>note2</title>
+</head>
+<body>
+<script>
+    /* 1.parseInt */
+    ;(function () {
+        return
+
+        var result = ['1', '2', '3'].map(parseInt)
+        console.log('result', result) // [1, NaN, NaN]
+
+        // map函数结构：
+        // array.map(function(item, index, array){}, this值)
+
+        // parseInt(string, radix)
+        // string 要被解析的字符串
+        // radix 要解析的数字的基数： 省略或0 --> 10; 0x或0X --> 16
+
+        // 相当于
+        var result1 = parseInt('1', 0)
+        var result2 = parseInt('2', 1)
+        var result3 = parseInt('3', 2)
+
+        // console.log(result1)
+        // console.log(result2)
+        // console.log(result3)
+
+    })()
+
+    /* 2.reduce */
+    ;(function () {
+        return
+
+        // [].reduce(Math.pow) // 报错
+
+        // array.reduce(function(pre, item, index, array){}, pre)
+
+        var result = [3, 2, 1].reduce(Math.pow)
+        console.log('result', result) // 9
+
+        var result1 = [5].reduce(Math.pow)
+        console.log('result1', result1)
+
+        // 如果没有写pre, 数组第一项是pre
+        var result2 = [5, 2, 3].reduce(function (pre, item, index, array) {
+            console.log('pre', pre, 'item', item, 'index', index, array)
+        })
+    })()
+
+    /* 3.数组 */
+    ;(function () {
+        return
+
+        var arr = [1, 2, 3]
+        arr[10] = '哈哈哈'
+        var result = arr.filter(function (item) {
+            return item === undefined
+        })
+        console.log('result', result) // []
+    })()
+
+    /* 4. 深浅拷贝 */
+    ;(function () {
+        return
+
+        let a = {
+            aa: 1,
+            bb: 2,
+            cc: 3,
+            dd: {
+                ee: 5,
+            },
+            ff: {
+                gg: 6,
+            }
+        };
+        let d = JSON.parse(JSON.stringify(a));//深复制包含子对象
+        let c = {...a};//拷贝一层但不包含子对象，子对象还是浅拷贝
+        let b = a;//浅拷贝
+        // b.bb = 22;
+        c.cc = 33;
+        c.dd.ee = 55;
+        // d.ff.gg = 66;
+        console.log(a);
+        // console.log(b);
+        console.log(c);
+        // console.log(d);
+    })()
+
+    /* 5.数组拷贝 */
+    ;(function () {
+        return
+
+        var a = [1, 2, [3, 4]]
+        var d = JSON.parse(JSON.stringify(a))
+        var c = [...a] //同对象一样，...的只能对最外层数组进行深复制，二维数组还是浅复制
+        // d[2][0] = 999
+        c[0] = 100
+        c[2][0] = 999
+        console.log(a)
+        // console.log(d)
+        console.log(c)
+    })()
+
+    /* 6.Set */
+    // 特点： 和数组相比，没有重复的值
+    ;(function () {
+        return
+
+        var arr = [1, 1, 2, 2, 3, 3]
+        var result = new Set(arr)
+        console.log(result, [...result]) // [1, 2, 3]
+
+        var obj = {name: 'xiaoqiang', age: 18}
+        // console.log([...obj]) // 报错
+
+        var set1 = new Set([NaN, NaN])
+        var set2 = new Set([{}, {}])
+        console.log(set1, set1.size) // 2 --- 在Set内部，两个NaN是相等的
+        console.log(set2, set2.size)
+    })()
+
+    /* 7.Map */
+    // 特点： 和对象比，键不局限于字符串，任何类型（包括对象）都可以当键
+    ;(function () {
+        return
+
+        var map = new Map()
+        var obj = {name: 'qiang'}
+        map.set(obj, '一个人')
+        console.log(map.get(obj)) // '一个人'
+        map.delete(obj)
+        console.log(map.get(obj)) // undefined
+
+    })()
+
+    /* 8. 模拟trim() */
+    ;(function () {
+        return
+
+        function myTrim(str) {
+            var reg = /^\s+|\s+$/g
+            return str.replace(reg, '')
+        }
+
+        var result = myTrim('     我   好帅呀   ')
+        console.log(result)
+    })()
+
+    /* 9. defineProperty */
+    ;(function () {
+        return
+
+        var obj = {}
+        Object.defineProperty(obj, 'newKey', {})
+        // Object.defineProperty(obj, 'newKey', { writable: true })
+        console.log('newKey', obj.newKey) // undefined
+
+        // 赋值不起作用
+        obj.newKey = 'hi'
+        console.log('newKey', obj.newKey) // undefined
+
+        // 重新用defineProperty改变它的值会报错
+        // Object.defineProperty(obj, 'newKey', {
+        //     value: 'hello'
+        // })
+
+        // 原因:
+        // configurable属性默认为false, 不能修改; writable默认false, 不能被重写
+
+    })()
+
+    /* defineProperty */
+    ;(function () {
+        return
+
+        var obj = {}
+        Object.defineProperty(obj, 'newKey', {
+            set: function () {},
+            get: function () {},
+            // value: 'hello',
+            // writable: true,
+            enumerable: true,
+            configurable: true
+        })
+    //    设置set或get之后，就不能再设置value和writable
+    })()
+
+    /* 10. arguments */
+    ;(function () {
+        return
+
+        function foo(name) {
+            console.log(name)
+            console.log(arguments)
+            console.log(Object.prototype.toString.call(arguments)) // [object Arguments]
+            console.log([...arguments])
+            console.log(Object.prototype.toString.call([...arguments])) // [object Array]
+            console.log({...arguments})
+            console.log(Object.prototype.toString.call({...arguments}))
+
+            var arr = [1, 9, 9]
+            console.log({...arr}) // {0: 1, 1: 9, 2: 9}
+            console.log([...arr])
+            var obj = {name: '小强', age: 18}
+            // console.log([...obj]) // 报错
+        }
+        foo('小强')
+    })()
+
+
+    /* 11. call */
+    ;(function () {
+        return
+
+        function sayPerson(name) {
+            console.log(name + this.age + '岁')
+        }
+        sayPerson('小米')
+        sayPerson.call({age: 18}, '小强')
+
+    //    实现一个call函数
+        Function.prototype.myCall = function (context) {
+            // myCall的第一个参数即指定的上下文（{age: 12}）
+            var context = context || window
+            // myCall的this即调用它的函数（sayPerson），这里将这个函数临时添加成context的方法
+            context.fn = this
+            // 取出函数执行参数（'小红'）
+            var args = [...arguments].slice(1)
+            // 让函数以context的方法的方式执行，则函数的this为context
+            var result = context.fn(...args)
+            // 删除为context加上的方法
+            delete context.fn
+            // 返回执行的return
+            return result
+        }
+        sayPerson.myCall({age: 12}, '小红')
+    })()
+
+    /* 12. apply */
+    ;(function () {
+        return
+
+        function sayPerson(name, sex) {
+            console.log(`此${sex + name + this.age}岁`)
+        }
+        sayPerson('小米', '男')
+        sayPerson.apply({age: 100}, ['小明', '男'])
+
+        Function.prototype.myApply = function (context) {
+            var context = context || window
+            context.fn = this
+            var arg = arguments[1] || []
+            var result = context.fn(...arg) // arg是一个数组，需要展开
+            delete context.fn
+            return result
+        }
+        sayPerson.myApply({age: 12}, ['小红', '女'])
+    })()
+
+    /* 13. bind */
+    ;(function () {
+        // return
+
+        function sayPerson(name, sex) {
+            console.log(`此${sex + name + this.age}岁`)
+        }
+        sayPerson('小米', '男')
+        sayPerson.bind({age: 333})('小明', '男男')
+
+        //    实现一个bind函数
+        Function.prototype.myBind = function (context) {
+            if(typeof this !== 'function'){
+                throw new TypeError('Error')
+            }
+            // 保存该函数
+            var _this = this
+        //    保存参数（通过bind传递的）
+            var args = [...arguments].slice(1)
+            // 返回一个函数（这是一个闭包）
+            return function F() {
+                return _this.apply(context, args.concat(...arguments)) // 这里的...arguments是调用返回的F函数时传递的
+            }
+        }
+    })()
+
+
+    /* 14. 原型链 */
+    ;(function () {
+        // return
+
+        /*
+        *  原型链的作用：
+        *    继承。
+        *  1.每次new实例都创建原型链的作用：
+        *    灵活。
+        *  2.原型链最终集合到Object.prototype的作用：
+        *    稳定。
+        *
+        *  推测：
+        *  Function创建实例的时，就会执行：
+        *  1.  （灵活）实例.__proto__ = 创建者.prototype 的同时：
+        *  2.  （稳定）实例.prototype.__proto__ = Object.prototype （如果是函数对象）
+        *       即： prototype的创建者是Object(其实是Object对 规则1 的使用)
+        *  这两条规则。
+        *
+        *  困境：
+        *  Function想要创建Object实例的时候，自身没有prototype;
+        *          想要创建自身prototype的时候，有需要Object。
+        *  解决：
+        *  Function先创建一个临时的prototype，
+        *  再创建Object，
+        *  创建的时候，根据 实例.prototype.__proto__ = Object.prototype （如果是函数对象）这条规则，
+        *  因为Object还不存在，所以Object也就不会为自己的原型创建原型。
+        *  Objec就绪，为了让自己的prototype和成为Object的实例，
+        *  Function就又创建了一次自己，因此
+        *  在 Function.prototype.__proto__ === Object.prototype 的同时，
+        *  Function.__proto__ === Function.prototype
+        *  即Function是自己的实例。
+        * */
+    })()
+</script>
+</body>
+</html>
