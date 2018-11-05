@@ -399,13 +399,6 @@ console.log(a);
       xxxYyyZzz
 js中的标识符底层实际上是以Unicode编码保存的，所以“理论上”Unicode编码中的内容都可以作为标识符用。
 
-
-
-
-javaScript
-第二天
-
-
 JS中一共有6种数据类型：
 
 基本数据类型5种：

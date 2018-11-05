@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>promise</title>
+</head>
+
+<body>
+    <script src="./js/promise-diy.js"></script>
+    <script type="text/javascript">
+        /* 1.promise, async-await */
+        ;(function () {
+            return
+
+            var p = new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    console.log('p')
+                    resolve('p中的数据')
+                }, 2000)
+            })
+            async function asyncFun() {
+                console.log('before await')
+                var title = await p
+                console.log('afer await')
+            }
+
+            asyncFun()  // 'before await'
+                        // --- 2s ---> 'p' 'after await'
+        })()
+
+        /* 2. 实现一个promise */
+        ;(function () {
+            // return
+        //    使用：
+            var p = new MyPromise(function (resolve, reject) {
+                setTimeout(function () {
+                    resolve('哈哈哈')
+                }, 2000)
+            })
+            p.then(function (msg) {
+                console.log('then', msg)
+            })
+        })()
+
+        /* resolve传入promise实例 */
+        ;(function () {
+            return
+
+            var p1 = new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    reject(new Error('fail'))
+                }, 3000)
+            })
+
+            var p2 = new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    console.log('p2定时器')
+                    resolve(p1)
+                }, 1000)
+            })
+
+            p2.then(function (res) {
+                console.log('res', res)
+            }).catch(function (msg) {
+                console.log('error', msg)
+            })
+
+        //    p2会等待p1的状态，返回最终的状态（这里是reject）
+        })()
+    </script>
+</body>
+
+</html>

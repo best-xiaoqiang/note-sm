@@ -264,7 +264,7 @@
 
     /* 13. bind */
     ;(function () {
-        // return
+        return
 
         function sayPerson(name, sex) {
             console.log(`此${sex + name + this.age}岁`)
@@ -291,7 +291,7 @@
 
     /* 14. 原型链 */
     ;(function () {
-        // return
+        return
 
         /*
         *  原型链的作用：
@@ -322,6 +322,37 @@
         *  Function.__proto__ === Function.prototype
         *  即Function是自己的实例。
         * */
+        
+    })()
+
+    /* 15. 解构赋值 */
+    ;(function () {
+        return
+
+        var obj = {title: '啦啦啦', age: 18}
+        // var obj = { age: 18}
+        var { title: name = '路人甲', age = 10, sex = 'man' } = obj || {}
+        console.log('name:', name, 'age:', age, 'sex:', sex)
+    })()
+
+    /* 16. 缓存 */
+    ;(function () {
+        return
+
+        var addTen = (function() {
+            var cache = {}
+            return function (num) {
+                console.log('cache', cache)
+                if(!cache[num]){
+                    cache[num] = 10 + num
+                }
+                return cache[num]
+            }
+        })()
+        console.log(addTen(2))
+        console.log(addTen(2))
+        console.log(addTen(3))
+        console.log(addTen(4))
     })()
 </script>
 </body>
