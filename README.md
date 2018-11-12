@@ -1067,4 +1067,85 @@ export function navigateTo({url, ...data}){
 }
 ```
 
-### （第二条）
+### bug记录
+
+#### wx.showTabBarRedDot失效
+
+当页面处于非tab页面时，wx.showTabBarRedDot是失效的、不起作用的。
+
+当你调用了wx.showTabBarRedDot却发现没有红点出现时，不要伤心，不要难过，不要想到做傻事，
+
+因为我发现，wx.showTabBarRedDot只有在tab页面才会生效。
+
+你是否是在非tab页面调用的？
+
+这种情况下，就需要借助一下本地存储。
+
+```javascript
+// 假设我们要显示红点的tab的index为1
+
+// 1.非tab页
+// 触发：
+wx.setStorageSync('show_tab_bar_red_dot', true)
+
+// 2.tab页
+// 触发： 
+wx.showTabBarRedDot({ index: 1 })
+// 在onShow中判断非tab页是否有红点触发：
+if(wx.getStorageSync('show_tab_bar_red_dot')){
+    wx.showTabBarRedDot({ index })
+}
+
+// 3.红点显示页（tab的index为1的页）：
+onShow(){
+    wx.setStorageSync('show_tab_bar_red_dot', false)
+}
+onTabItemTap(){
+    wx.hideTabBarRedDot({ index: 1 })
+}
+```
+
+#### socket异常关闭
+
+微信小程序中socket百分百会关闭的情况：
+
+小程序从前台进入后台，过了很短的一段时间后。
+
+所以如果有处理socket异常关闭的需要，可以重点关照一下小程序onShow时的socket连接情况。
+
+#### navigateTo失效或redirectTo失效
+
+很多困扰来自看文档中错过的一些细节。
+
+``navigateTo``, ``redirectTo``只能打开非 tabBar 页面。
+
+``switchTab``只能打开 tabBar 页面。
+
+#### ios保存动图
+
+wx.saveImageToPhotosAlbum()可以实现图片的一键保存。
+
+但是，当图片是GIF的格式时，ios保存下来的图是打死不会动的。
+
+这时候，可以用wx.previewImage展示大图，并引导用户长按保存。
+
+#### draw是异步的
+
+很多困扰来自看文档中错过的一些细节。
+
+微信小程序文档中，关于画布中draw方法的实例中，并没有很明显的突出draw的异步的特性。
+
+所以，如果你想在画布上作图、并导出图片时，很容易写成这样：
+
+```javascript
+ctx.draw()
+ctx.canvasToTempFilePath({ canvasId: 'myCanvas' })
+```
+
+这样得到的图片就是空白的，所以记得用异步方式使用``draw()``。
+
+```javascript
+ctx.draw(true, function() {
+    // do some thing
+})
+```

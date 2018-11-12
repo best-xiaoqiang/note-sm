@@ -354,6 +354,30 @@
         console.log(addTen(3))
         console.log(addTen(4))
     })()
+
+    /* 17.数组去重 */
+    ;(function () {
+        return
+
+        var arr = [1, 2, 3, 3, 3, 4, 4, 5]
+        var arr1 = [...new Set(arr)]
+        console.log(arr1)
+    })()
+
+    /* 18. Set和Map */
+    ;(function () {
+        // return
+        var arr = [1, 2, 3, 3, 3, 4, 4, 5]
+
+        //    Set本身是一个构造函数，用来生成Set数据结构。
+        //    它类似于数组，但是成员是唯一的、不重复的。
+
+        const s = new Set()
+        arr.forEach(x => {
+            s.add(arr)
+        })
+        console.log('s', s)
+    })()
 </script>
 </body>
 </html>
