@@ -1,16 +1,6 @@
-# 大众美男典范霍小强的笔记
+# 笔记
 
-相关账号：
-
-* [掘金账号](https://juejin.im/user/59647674a22b9d006a5df241/posts)
-* [博客园账号](http://www.cnblogs.com/best-xiaoqiang/)
-* [CSDN](https://blog.csdn.net/best_xiaoqiang)
-
-或者，也可以：
-
-* [联系我](https://github.com/best-xiaoqiang/note-sm/blob/master/image/lala.png)
-* [给我钱 ←←←](https://github.com/best-xiaoqiang/note-sm/blob/master/image/haha.png)
-
+[JavaScript自我实现系列](https://github.com/best-xiaoqiang/note-sm/edit/master/README.md)
 ***
 
 ## 从赋值看基本类型和引用类型的区别
