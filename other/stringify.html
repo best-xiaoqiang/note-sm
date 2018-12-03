@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>stringify</title>
+</head>
+<body>
+    <script>
+        /* 1.undefined值、函数或XML值会被忽略 */
+        ;(function () {
+            return
+
+            var j1 = JSON.stringify({
+                name: '小强',
+                age: 18
+            })
+            // console.log(j1);
+
+            var j2 = JSON.stringify({
+                doStuff: function () { },
+                doThings: [function () { }, undefined]
+            })
+            // console.log(j2) // "{"doThings":[null,null]}"
+
+            var j3 = JSON.stringify({
+                foo: function () {}
+            })
+            console.log('j3', j3) // {}
+
+            var j4 = JSON.stringify({name: undefined})
+            console.log('j4', j4) // {}
+        })()
+
+        /* 2.不可遍历属性会被忽略 */
+        ;(function () {
+            return
+
+            var obj = {}
+            Object.defineProperties(obj, {
+                'name': {
+                    value: '小明',
+                    enumerable: true
+                },
+                'age': {
+                    value: 20,
+                    enumerable: false
+                }
+            })
+            var j = JSON.stringify(obj)
+            console.log('j:', j) // {"name":"小明"}
+        })()
+
+        /* 3.还可以接受第二个参数，指定需要转换成字符串的属性 */
+        ;(function () {
+            // return
+
+            console.log(JSON.stringify({a: 1, b: 2}, ['b'])); // {"b": 2}
+        })()
+    </script>
+</body>
+</html>

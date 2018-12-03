@@ -214,6 +214,8 @@
 
 
     /* 11. call */
+    //    （手动实现js方法系列）
+
     ;(function () {
         return
 
@@ -226,9 +228,10 @@
     //    实现一个call函数
         Function.prototype.myCall = function (context) {
             // myCall的第一个参数即指定的上下文（{age: 12}）
+            // 这里的this相当于“这儿”的意思，“这个地方”
             var context = context || window
             // myCall的this即调用它的函数（sayPerson），这里将这个函数临时添加成context的方法
-            context.fn = this
+            context.fn = this // 这里的this相当于“这个”的意思，“这个函数”
             // 取出函数执行参数（'小红'）
             var args = [...arguments].slice(1)
             // 让函数以context的方法的方式执行，则函数的this为context
@@ -242,6 +245,8 @@
     })()
 
     /* 12. apply */
+    //    （手动实现js方法系列）
+
     ;(function () {
         return
 
@@ -263,6 +268,8 @@
     })()
 
     /* 13. bind */
+    //    （手动实现js方法系列）
+
     ;(function () {
         return
 
@@ -366,7 +373,8 @@
 
     /* 18. Set和Map */
     ;(function () {
-        // return
+        return
+        // Set
         var arr = [1, 2, 3, 3, 3, 4, 4, 5]
 
         //    Set本身是一个构造函数，用来生成Set数据结构。
@@ -377,6 +385,59 @@
             s.add(arr)
         })
         console.log('s', s)
+
+    //    Map
+        var m = new Map()
+        m.set('hsq', '帅哥')
+        m.set('lmx', '美女')
+        console.log('m', m)
+        console.log('m.has', m.has('hyc'))
+        console.log('m.get', m.get('lmx'))
+        // m.delete('lmx')
+        // console.log('m.get', m.get('lmx'))
+    })()
+
+    /* 19. A instanceof B */
+    //    （手动实现js方法系列）
+    ;(function () {
+        return
+
+    //    模拟一个instanceof方法
+    //    A是否可以找到B的prototype(B的prototype是否在A的原型链上)
+    //    男孩是否可以找到女孩闺房
+        function canBoyFind(boy, girl) {
+            // boudoir就是女孩的闺房
+            var boudoir = girl.prototype
+            // room就是男孩现在所在的房间
+            var room = boy.__proto__
+            while (true){
+                // 如果男孩没在任何房间，他也就没有下一把通往另一个房间的钥匙，那他再不会找到女孩的闺房了
+                if (room === null){
+                    return false
+                }
+                // 男孩就在女孩闺房，恭喜这对新人
+                if (room === boudoir){
+                    return true
+                }
+                // 虽然男孩所在房间不是女孩闺房，但是这里有把通往下一个房间的钥匙(__proto__)
+                // 于是男孩走进下一个房间...
+                room = room.__proto__
+            }
+        }
+
+
+        console.log(Object instanceof Object) // true
+        console.log(Function instanceof Function) // true
+        console.log(Number instanceof Number) // false
+    })()
+
+    /* 20. typeof prototype */
+    ;(function () {
+        // return
+
+        console.log(typeof Function.prototype) // function
+        console.log(typeof Object.prototype) // object
+        console.log(typeof Number.prototype) // object
     })()
 </script>
 </body>

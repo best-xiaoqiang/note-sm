@@ -1,4 +1,4 @@
-# 大众美男典范霍小强的笔记
+# 大众美男典范小强的笔记
 
 相关账号：
 
@@ -1115,7 +1115,7 @@ onTabItemTap(){
 
 #### navigateTo失效或redirectTo失效
 
-很多困扰来自看文档中错过的一些细节。
+很多困扰，来自看文档中错过的一些细节。
 
 ``navigateTo``, ``redirectTo``只能打开非 tabBar 页面。
 
