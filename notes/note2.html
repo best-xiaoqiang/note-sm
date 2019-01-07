@@ -433,11 +433,253 @@
 
     /* 20. typeof prototype */
     ;(function () {
-        // return
+        return
 
         console.log(typeof Function.prototype) // function
         console.log(typeof Object.prototype) // object
         console.log(typeof Number.prototype) // object
+    })()
+
+    /* 21. 3行代码实现promise */
+    // first
+    ;(function () {
+        return
+
+        function EasyPromiseEs6(fn) {
+            this.then = cb => this.cb = cb
+            this.resolve = data => this.cb(data)
+            fn(this.resolve)
+        }
+
+        function EasyPromise(fn) {
+            var that = this
+            this.then = function (cb) {
+                that.cb = cb
+            }
+            this.resolve = function (data) {
+                that.cb(data)
+            }
+            fn(this.resolve)
+        }
+        /*
+        *  和直接执行fn的区别，Promise就是
+        *    resolve就是fn的一个回调函数；
+        *    then就是接收并保存这个回调函数。
+        * */
+
+        new EasyPromise(function (resolve) {
+            setTimeout(function () {
+                console.log('is time')
+                resolve('i am data')
+            }, 1000)
+            console.log('in cb')
+        }).then(function (data) {
+            console.log('then:', data)
+        })
+    })()
+
+    // 21. try 1
+    ;(function () {
+        return
+
+        function EasyPromiseEs6(fn) {
+            this.then = cb => this.cb = cb
+            this.resolve = data => this.cb(data)
+            fn(this.resolve)
+        }
+
+        function EasyPromise(fn) {
+            var that = this
+            // then用来得到“待执行”的函数
+            this.then = function (thenCb) {
+                that.thenCb = thenCb
+                return that
+            }
+            this.catch = function(catchCb){
+                that.catchCb = catchCb
+            }
+            var thenCb = function(data){
+                that.thenCb(data)
+            }
+            var catchCb = function(data){
+                that.catchCb(data)
+            }
+            fn(thenCb, catchCb)
+        }
+
+        new EasyPromise(function (resolve, reject) {
+            setTimeout(function () {
+                console.log('is time')
+                resolve('i am data')
+                reject('出错了')
+            }, 2000)
+            console.log('in cb')
+        }).then(function (data) {
+            console.log('then:', data)
+        }).catch(function (msg) {
+            console.log('msg', msg)
+        })
+    })()
+
+    /* 21. try 2 */
+    ;(function () {
+        return
+
+        var p = new Promise(function (resolve) {
+            setTimeout(function () {
+                resolve('时间到')
+            }, 1000)
+        })
+        p.then(function (res) {
+            console.log(res)
+        })
+
+
+        // 1.普通执行
+        function fn() {
+            setTimeout(function () {
+                console.log('时间到')
+            }, 1000)
+        }
+        fn()
+
+        // 2.定义回调函数
+        function fn() {
+            setTimeout(function () {
+                cb('时间到')
+            }, 1000)
+        }
+        function cb(data) {
+            console.log(data)
+        }
+        fn(cb)
+
+        /*
+        *  3.写一个构造函数：
+        *    参数是一个函数： 定义完就会执行
+        *    有一个方法then: 里面传递的是回调函数cb
+        * */
+        function Pro(fn) {
+
+        }
+
+    })()
+
+
+    /* 22.flat */
+    // 扁平化数组，将数组转化为一维数组
+    ;(function () {
+        return
+
+        const arr = [1,2,[3,[4,5]]]
+        // 默认展开一层
+        console.log(arr.flat()) // [1,2,3,[4,5]]
+
+        console.log(arr.flat(2)) // [1,2,3,4,5]
+        console.log(arr.flat(6)) // [1,2,3,4,5]
+    })()
+
+
+    /* 23. new操作符的作用 */
+    ;(function () {
+        return
+
+        // 参考自：
+        // 深入理解 new 操作符
+        // https://www.cnblogs.com/onepixel/p/5043523.html
+
+        function Animal(name) {
+            this.name = name
+        }
+        var cat = new Animal('贱贱')
+        console.log('cat', cat)
+
+        // new伪代码
+        /*
+            new Animal('cat') = {
+                var obj = {};
+                obj.__proto__ = Animal.prototype;
+                var result = Animal.call(obj,"cat");
+                return typeof result === 'object'? result : obj;
+            }
+        */
+
+        function _new(Fn) {
+            var obj = {}
+            obj.__proto__ = Fn.prototype
+            var args = [...arguments].slice(1)
+            var result = Fn.call(obj, ...args)
+            return typeof result === 'object' ? result : obj
+        }
+
+        var dog = _new(Animal, '轮胎')
+        console.log('dog', dog)
+    })()
+
+    /* 23 */
+    ;(function () {
+        // return
+
+        function Person(think) {
+            this.think = think
+        }
+        Person.prototype.say = function () {
+            console.log(this.think)
+        }
+
+        var x = new Person('好好学习、天天向上')
+        x.say() // '好好学习、天天向上'
+
+        /*
+        *  new Person('好好学习、天天向上') = {
+        *       var baby = {}
+        *       // 先天继承
+        *       baby.__proto__ = Person.prototype
+        *       // 后天塑造
+        *       var man = Person.call(baby, '好好学习、天天向上')
+        *       return typeof man === 'object' ? man : baby
+        *  }
+        */
+
+    })()
+
+    /* 24. 一道题 */
+    ;(function () {
+        return
+
+        function Foo() {
+            getName = function () {
+                console.log(1)
+            }
+            return this;
+        }
+
+        Foo.getName = function () {
+            console.log(2)
+        }
+        Foo.prototype.getName = function () {
+            console.log(3)
+        }
+        var getName = function () {
+            console.log(4)
+        }
+
+        function getName() {
+            console.log(5)
+        }
+
+// ouput:
+        Foo.getName(); // 2
+        getName(); // 4
+        try{
+            Foo().getName(); // Uncaught TypeError: Foo(...).getName is not a function
+        }catch (e) {
+            console.log(e)
+        }
+        getName(); // 1
+        new Foo.getName(); // 2
+        new Foo().getName(); // 3. 实例
+        new new Foo().getName(); // 3
     })()
 </script>
 </body>
