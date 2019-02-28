@@ -823,6 +823,11 @@
         for(var key in obj){
             console.log(key + ':' + obj[key])
         }
+
+        console.log(typeof Object.prototype) // 'object'
+        console.log(typeof Function.prototype) // 'function'
+
+    //    为什么typeof Function.prototype是'function'。因为规定typeof [native code]就是function ?
     })()
 
 
@@ -1280,6 +1285,21 @@
         fun()   // 3
         foo()   // 2. 是独立于fun()的。说明两个函数中对应的那个变量对象是两个不同的对象
         fun()   // 4
+
+        /*
+        * 执行上下文：
+        *
+        *   1.变量对象（VO）；
+        *   2.作用域链；
+        *   3.this指向
+        *
+        * 作用域链又包括：
+           （1） [[scope]]属性: 指向父级变量对象和作用域链，也就是包含了父级的[[scope]]和AO
+           （2） AO: 自身活动对象
+        * */
+
+
+
     })()
 
 

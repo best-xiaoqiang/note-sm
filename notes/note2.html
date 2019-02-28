@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <title>note2</title>
 </head>
+<style>
+    html, body{
+        height: 100%;
+        margin: 0;
+    }
+</style>
 <body>
 <script>
     /* 1.parseInt */
@@ -568,6 +574,7 @@
 
     /* 22.flat */
     // 扁平化数组，将数组转化为一维数组
+    // * 这是一个试验中的功能
     ;(function () {
         return
 
@@ -577,6 +584,12 @@
 
         console.log(arr.flat(2)) // [1,2,3,4,5]
         console.log(arr.flat(6)) // [1,2,3,4,5]
+
+
+    //   利用toString实现扁平化
+        var arr2 = [1,[2,[3,[4,[5]]]]]
+        var result = arr2.toString().split(',').map(i => +i)
+
     })()
 
 
@@ -608,17 +621,27 @@
             var obj = {}
             obj.__proto__ = Fn.prototype
             var args = [...arguments].slice(1)
-            var result = Fn.call(obj, ...args)
-            return typeof result === 'object' ? result : obj
+            var newObj = Fn.call(obj, ...args)
+            return typeof newObj === 'object' ? newObj : obj
         }
 
         var dog = _new(Animal, '轮胎')
         console.log('dog', dog)
+
+        /*
+        *  new操作符和构造函数的关系，就好像厕所和上厕所的关系。
+        *  构造函数要用new调用，就好比要上厕所就应该去厕所一样。
+        *  但是，构造函数可以不用调用吗？
+        *  可以的，这就像一个人在没有厕所的情况下上厕所一样。
+        *  同时，拿构造函数当普通函数调用，这是我们不提倡的，就像我们不提倡随地大小便一样。
+        *  因为这样会有一定的风险，这就好比随地大小便会污染环境。
+        *
+        * */
     })()
 
     /* 23 */
     ;(function () {
-        // return
+        return
 
         function Person(think) {
             this.think = think
@@ -681,6 +704,299 @@
         new Foo().getName(); // 3. 实例
         new new Foo().getName(); // 3
     })()
+
+    /* 25.module.exports和exports */
+    // commonJS
+    ;(function () {
+        return
+
+        function require(params) {
+            // some codes
+
+            var module = {
+                exports: {}
+            }
+            ;(function (module, exports) {
+
+                // yourself code
+                yourCode(module, exports)
+
+            })(module, module.exports)
+            return module.exports || {}
+        }
+        var result = require()
+
+
+        function yourCode(module, exports){
+            const obj = {
+                title: '大众美男典范'
+            }
+        //     case1
+        //     module.exports = obj // {title: '大众美男典范'}
+
+        //     case2
+        //     exports = {school: '清华'} // {}。exports之前保存的是module.exports的引用，这里只是丢失了这个引用。
+
+        //     case3
+        //     exports.name = '小明'
+        //     exports = {school: '清华'} // {name: '小明'}。这里也是丢失了module.exports的引用，但是在丢失之前对其进行了一些改变。
+
+        //     case4
+            exports.name = '小明'
+            exports = {school: '清华'}
+            module.exports = obj // {title: '大众美男典范'}。前两句过程同上，最后一句又是直接改变了module.exports的值。
+
+        //     case5
+        //     module.exports = obj
+        //     module.exports.school = '清华' // {title: '大众美男典范', school: '清华'}。最终返回的是module.exports。
+
+            //     case6
+            // module.exports = obj
+            // exports.school = '清华' // {title: '大众美男典范'}。最终返回的是module.exports。这次是exports被动丢失module.exports的引用（module替换了之前的exports）。
+        }
+
+
+
+        // 综上，module.exports的方式比较保险。exports真不靠谱。
+
+        console.log('result', result)
+    })()
+
+    /* 26. 构造函数和class的区别*/
+    ;(function () {
+        return
+
+        // 构造函数：
+        function Person() {}
+        Person.prototype.say = function (msg) {
+            console.log('say:', msg)
+        }
+        console.log('keys:', Object.keys(Person.prototype)) // ["say"]
+        console.log('own:', Object.getOwnPropertyNames(Person.prototype)) // ["constructor", "say"]
+
+
+        // class:
+        class Dog{
+            constructor(){}
+            say(msg){
+                console.log('say:', msg)
+            }
+        }
+        console.log('keys:', Object.keys(Dog.prototype)) // []。 是不可枚举的。
+        console.log('own:', Object.getOwnPropertyNames(Dog.prototype)) // ["constructor", "say"]
+    })()
+
+
+    /* 27. class */
+    ;(function () {
+        return
+
+        class Animal {
+            static eat(){
+                return 'energy'
+            }
+        }
+
+        var methodName = 'getAge'; // 类的属性名可以采用表达式
+        class Person {
+
+            constructor(name, age){
+                this.nameTemp = name || '小明'
+                this.age = age || 18
+            }
+            get name(){
+                console.log('do get name')
+                return this.nameTemp
+            }
+            set name(val){
+                console.log('do set name:', val)
+                this.nameTemp = val
+            }
+            sayName(){
+                console.log('name:', this.name)
+            }
+            [methodName](){
+                console.log('属性名', methodName)
+                var v = methodName.split('get')[1].toLowerCase()
+                console.log(v, this[v])
+            }
+            // 通过类来调用，不会被实例继承
+            static sayLove(){
+                console.log('love ' + Animal.eat())
+            }
+        }
+
+        var p = new Person('小强')
+        p.sayName()
+        p.name = '李明'
+        p.getAge()
+        // p.sayLove() // 报错
+        Person.sayLove() // 'love'
+        console.log(p.school)
+    })()
+
+    /* 27.class中的this */
+    ;(function () {
+        return
+
+        class Logger{
+            constructor(){
+                // this.printName = this.printName.bind(this) // 所以要绑定this
+            }
+            printName(name = '小明'){
+                this.print(`name: ${name}`)
+            }
+            print(text){
+                console.log('print:', text)
+            }
+        }
+        var l = new Logger()
+        // 情况一：
+        // l.printName()
+
+    //    情况二：
+        var printName = l.printName
+        printName() // 报错
+    })()
+
+    /* 28. 非匿名自执行函数函数，函数变量为只读状态，无法修改 */
+    ;(function () {
+        return
+
+        var foo = 123
+        function foo() {
+            foo = 'hello'
+        }
+        // foo() // 报错
+        console.log('foo', foo) // '123'
+
+        // 非匿名自执行函数
+        var fun = 321
+        ;(function fun() {
+            fun = 'hi' // fun在函数中只为只读，因此赋值无效
+            console.log('fun:', fun) // f fun(){...}
+        })()
+    })()
+
+
+    /* 29.防抖 */
+    /*
+    *  等待结束。
+    *
+    *  场景：用户输入。
+    * */
+    ;(function () {
+        return
+
+        function debounce(fn, wait, immediate) {
+            let timer = null
+
+            return function() {
+                let args = arguments
+                let context = this
+
+                // 立即触发一次
+                if (immediate) {
+                    fn.apply(context, args)
+                    immediate = false
+                }
+
+                if (timer) clearTimeout(timer)
+                timer = setTimeout(() => {
+                    fn.apply(context, args)
+                }, wait)
+            }
+        }
+
+        var cb = function (e) {
+            console.log('e', e)
+        }
+        document.body.onmousemove = debounce(cb, 3000, true)
+    })()
+
+    /* 30. 节流 */
+    /*
+    *  降低频率。
+    *
+    *  场景：滚动条事件，resize事件。
+    * */
+    ;(function () {
+        return
+
+        function throttle(fn, wait, immediate) {
+            let timer = null
+
+            return function() {
+                let args = arguments
+                let context = this
+
+                if (immediate) {
+                    fn.apply(context, args)
+                    immediate = false
+                }
+
+                if (!timer) {
+                    timer = setTimeout(() => {
+                        fn.apply(context, args)
+                        timer = null
+                    }, wait)
+                }
+            }
+        }
+        var cb = function (e) {
+            console.log('e', e)
+        }
+        document.body.onmousemove = throttle(cb, 300)
+    })()
+
+    /* 31. 圣杯模型 */
+    ;(function () {
+        return
+
+        var inherit = (function(c,p){
+            var F = function(){};
+            return function(c,p){
+                F.prototype = p.prototype;
+                c.prototype = new F();
+                c.uber = p.prototype;
+                c.prototype.constructor = c;
+            }
+        })();
+    })()
+
+
+    /* 32. 函数柯里化 */
+    /*
+    *  利用闭包特点，通过修改外层函数的参数，返回具有类似但非相同功能的函数。
+    * */
+    ;(function () {
+        return
+
+        const add = function add(x) { // 功能差异区
+            return function (y) { // 功能相同区
+                return x + y
+            }
+        }
+
+        const add1 = add(1)
+        const add2 = add(2)
+
+        console.log(add1(1))
+        console.log(add1(11))
+    })()
+
+    /* 33.Object.is() */
+    // ES6
+    ;(function () {
+        // return
+
+        console.log(NaN == NaN) // false
+        console.log(+0 === -0) // true
+
+        console.log(Object.is(NaN, NaN)) // true
+        console.log(Object.is(+0, -0)) // false
+    })()
+
 </script>
 </body>
 </html>
