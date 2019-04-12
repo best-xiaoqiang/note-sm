@@ -115,19 +115,23 @@
     /* 6.Set */
     // 特点： 和数组相比，没有重复的值
     ;(function () {
-        return
+        // return
 
         var arr = [1, 1, 2, 2, 3, 3]
         var result = new Set(arr)
-        console.log(result, [...result]) // [1, 2, 3]
+        console.log(result, typeof result, [...result]) // [1, 2, 3]
 
         var obj = {name: 'xiaoqiang', age: 18}
         // console.log([...obj]) // 报错
 
         var set1 = new Set([NaN, NaN])
         var set2 = new Set([{}, {}])
-        console.log(set1, set1.size) // 2 --- 在Set内部，两个NaN是相等的
-        console.log(set2, set2.size)
+        console.log(set1, set1.size) // 1 --- 在Set内部，两个NaN是相等的
+        console.log(set2, set2.size) // 2
+
+        var obj1= {}
+        var obj2 = obj1
+        console.log(new Set([obj1, obj2])) // size为1
     })()
 
     /* 7.Map */
@@ -760,6 +764,22 @@
         // 综上，module.exports的方式比较保险。exports真不靠谱。
 
         console.log('result', result)
+
+    //    module.exports和exports外传
+        /*
+        *  require之作用，就是module.exports.
+        *  把module比作小明，把module.exports比作小明的女朋友；
+        *  require之作用，就是得到“小明的女朋友”
+        *  而requires，就好比小明最初的女朋友，比如叫小红。
+        *  在模块创建之初，小明的女朋友和小红指向同一个对象，即小明的女朋友就是小红。
+        *  所以，对小红做什么就相当于对小明的女朋友做什么。
+        *  但是，当requires被赋值一个对象，相当于小红找了新对象，小红就不再是小明的对象。
+        *  此时，对小红做什么都不重要了，因为我们想得到的是“小明的女朋友”。
+        *  同理，当module.exports被赋值一个对象，相当于小明找了新对象，小红也被动的不再是小明的对象。
+        *  小红又不重要了。
+        *  综上，不忘初心，方得“小明的女朋友”。
+        *
+        * */
     })()
 
     /* 26. 构造函数和class的区别*/
