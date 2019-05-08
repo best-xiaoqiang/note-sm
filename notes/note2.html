@@ -115,7 +115,7 @@
     /* 6.Set */
     // 特点： 和数组相比，没有重复的值
     ;(function () {
-        // return
+        return
 
         var arr = [1, 1, 2, 2, 3, 3]
         var result = new Set(arr)
@@ -635,7 +635,7 @@
         /*
         *  new操作符和构造函数的关系，就好像厕所和上厕所的关系。
         *  构造函数要用new调用，就好比要上厕所就应该去厕所一样。
-        *  但是，构造函数可以不用调用吗？
+        *  但是，构造函数可以不用new调用吗？
         *  可以的，这就像一个人在没有厕所的情况下上厕所一样。
         *  同时，拿构造函数当普通函数调用，这是我们不提倡的，就像我们不提倡随地大小便一样。
         *  因为这样会有一定的风险，这就好比随地大小便会污染环境。
@@ -1008,7 +1008,7 @@
     /* 33.Object.is() */
     // ES6
     ;(function () {
-        // return
+        return
 
         console.log(NaN == NaN) // false
         console.log(+0 === -0) // true
@@ -1016,6 +1016,47 @@
         console.log(Object.is(NaN, NaN)) // true
         console.log(Object.is(+0, -0)) // false
     })()
+
+    /* 34. requestAnimationFrame */
+    ;(function () {
+        return
+
+        /*
+        *  根据系统的刷新而执行回调函数。
+        *  它能保证回调函数在屏幕每一次刷新间隔中执行一次，这样就不会引起丢帧。
+        * */
+
+        var num = 0
+        function render() {
+            num++
+            console.log('num', num)
+            if(num < 1000){
+                window.requestAnimationFrame(render)
+            }
+        }
+        window.requestAnimationFrame(render)
+    })()
+
+
+    /* 35.一个题 */
+    ;(function () {
+        // return
+
+        // 什么情况下以下代码输出1？
+
+        let val = 1
+        Object.defineProperty(window, 'a', {
+            get: function () {
+                return val++
+            }
+        })
+
+        if(a==1 && a==2 && a==3) {
+            console.log(111)
+        }
+    })()
+
+
 
 </script>
 </body>
