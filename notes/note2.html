@@ -11,6 +11,9 @@
     }
 </style>
 <body>
+
+<!--<div>我是一个大帅哥</div>-->
+
 <script>
     /* 1.parseInt */
     ;(function () {
@@ -142,6 +145,8 @@
         var map = new Map()
         var obj = {name: 'qiang'}
         map.set(obj, '一个人')
+        map.set('hhdd', '哈哈')
+        console.log([...map])
         console.log(map.get(obj)) // '一个人'
         map.delete(obj)
         console.log(map.get(obj)) // undefined
@@ -1040,7 +1045,7 @@
 
     /* 35.一个题 */
     ;(function () {
-        // return
+        return
 
         // 什么情况下以下代码输出1？
 
@@ -1055,6 +1060,178 @@
             console.log(111)
         }
     })()
+
+
+
+    /* 36.实现简单Promise */
+    ;(function () {
+        return
+
+        function Prom(fn) {
+            var value = null,
+                state = 'pending',
+                callbacks = [];  //callbacks为数组，因为可能同时有很多个回调
+
+            this.then = function (onFulfilled) {
+                if(state === 'pending'){
+                    callbacks.push(onFulfilled);
+                    return this
+                }
+                onFulfilled(value)
+                return this
+            };
+
+            function resolve(newValue) {
+                value = newValue
+                state = 'fulfilled'
+                setTimeout(function () {
+                    callbacks.forEach(function (callback) {
+                        callback(value);
+                    });
+                }, 0) // 防止在then方法注册回调之前，resolve就已经执行了
+            }
+            fn(resolve);
+        }
+
+
+        var p = new Prom(function (resolve, reject) {
+            setTimeout(()=>{
+                resolve('hi')
+            }, 200)
+        })
+        p.then((data)=>{
+            console.log(data)
+        })
+        setTimeout(()=>{
+            p.then((data)=>{
+                console.log(data + '已经resolve之后用then注册的回调')
+            })
+        }, 3000)
+    })()
+
+
+    /* 37.惰性载入函数 */
+    ;(function () {
+        return
+
+        var a = 123
+        var b = 123
+        
+        function func1() {
+            if(a === b){
+                console.log('相等')
+            }else{
+                console.log('不相等')
+            }
+        }
+        
+    //    换成
+        function func2() {
+            console.log('func2--start', func2)
+            if(a === b){
+                func2 = function () {
+                    console.log('相同')
+                }
+            }else{
+                func2 = function () {
+                    console.log('不相同')
+                }
+            }
+            return func2()
+        }
+
+        func2()
+        // 执行完成后，func2函数已经被覆盖改写，变成之前return出来的那个函数
+        // 从而实现只判断一次
+        console.log('func2--end', func2)
+    })()
+
+
+    /* 38. 一次执行函数 */
+    ;(function () {
+        return
+
+        function Func() {
+            console.log("第一次执行");
+            Func = function () {
+                console.log("后续执行");
+            }
+        }
+        Func() // '第一次执行'
+        Func() // '后续执行'
+        Func() // '后续执行'
+        Func() // '后续执行'
+    })()
+
+
+    /* 39.自适应页面 */
+    ;(function () {
+        return
+
+        function autoResponse(width = 750) {
+            const target = document.documentElement;
+            target.clientWidth >= 900
+                ? (target.style.fontSize = "80px")
+                : (target.style.fontSize = target.clientWidth / width * 100 + "px");
+        }
+        autoResponse()
+    })()
+
+
+    /* 40.生成随机ID */
+    ;(function () {
+        return
+
+        let id = Math.random().toString(36).substring(2);
+        // toString()里的参数是数字的基数
+        console.log('id', id)
+    })()
+
+
+    /* 41. 获取url的参数 */
+    ;(function () {
+        return
+
+        function getParamsObj(paramsStr){
+            let o = {}
+            paramsStr.replace(/([^?&=]+)=([^&]+)/g,(_,k,v)=>o[k]=v)
+            return o
+        }
+        let urlAfterStr = '?foo=bar&baz=bing => {foo: bar, baz: bing}'
+        console.log('opt', getParamsObj(urlAfterStr))
+        console.log(getParamsObj(location.search))
+
+        // location.search.replace(/([^?&=]+)=([^&]+)/g,(_,k,v)=>q[k]=v)
+    })()
+
+
+    /* 42.数组混淆 */
+    ;(function () {
+        return
+
+        let randomArr = (arr) => arr.slice().sort(() => Math.random() - 0.5)
+        let arr = [1,2,3,4,5,6,7,8]
+        let r = randomArr(arr)
+        console.log('r', r)
+    })()
+
+    /* 43.访问嵌套对象 */
+    ;(function () {
+        // return
+
+        let user = null
+        let name = ((user || {}).userInfo || {}).name || ''
+        console.log('name', name)
+    })()
+
+
+
+    /*  */
+    ;(function () {
+
+    })()
+
+
 
 
 
