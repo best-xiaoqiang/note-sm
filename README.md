@@ -1,8 +1,8 @@
 # 笔记
 
-## JavaScript自我实现系列
+## 其它
 
-[点击跳转](https://github.com/best-xiaoqiang/Huskie)
+[JavaScript自我实现系列](https://github.com/best-xiaoqiang/Huskie)
 ***
 
 ## 从赋值看基本类型和引用类型的区别
