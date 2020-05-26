@@ -50,37 +50,6 @@
 //        console.log(result2)    //2,3
     })()
 
-
-
-        /* 2.split() */
-    ;
-    (function () {
-        var str='hello,my name is huo'
-        var result=str.split(',')
-//        console.log('str:', str)
-//        console.log('result:',result)   // ['hello','my name is huo']
-//        console.log('result[0]:',result[0])     // hello
-    })()
-
-
-        /* 3.window.location.href */
-    ;
-    (function () {
-//        window.location.href='http://www.baidu.com'
-    })()
-
-
-        /* 4.encodeURIComponent() */
-    ;
-    (function () {
-        var str='小强'
-        var result=encodeURIComponent(str)
-//        console.log('encode:', result)
-        result=decodeURIComponent(result)
-//        console.log('decode', result)
-    })()
-
-
         /* 5.reduce */
     ;
     (function () {
@@ -114,19 +83,6 @@
         })
 //        console.log('arr', arr)
 //        console.log('result', result)   // [10, 20, 30, 40, 50]
-    })()
-
-
-        /* 8.获取url里的参数 */
-    ;
-    (function () {
-        function getUrl(name){
-            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-            var r = window.location.search.substr(1).match(reg);
-            if(r!=null)return  unescape(r[2]); return null;
-        }
-        var result=getUrl('id')
-//        console.log(result)
     })()
 
 
@@ -314,7 +270,7 @@
         var result4=arr.indexOf(3,3)    //6 (找第一个3，从index为3的地方开始找)
         var result2=arr.lastIndexOf(3)  //6
         var result5=arr.lastIndexOf(3,6)    //6
-        var result6=arr.lastIndexOf(3,5)    //2 （找最后一个3，截止到index为3的地方）
+        var result6=arr.lastIndexOf(3,5)    //2 （找最后一个3，截止到index为5的地方）
 //        console.log(result6)
     })()
     
@@ -422,7 +378,7 @@
                 console.log('3')
                 break
             default :
-//                console.log('default')
+               console.log('default')
         }
     })()
 
@@ -435,7 +391,7 @@
 //        console.log('arr.length:', arr.length)  //2
         arr[99] = 'item3'
 //        console.log('arr.length:', arr.length)  //100
-//        console.log(typeof(arr[98]))
+//        console.log(typeof(arr[98])) // undefined
     })()
 
 
@@ -712,7 +668,7 @@
 //        console.log(obj.value)  //undefined
 //        console.log(obj.foo)    //'hhh'
 
-//        但是new Test（）并不会将Test的pro totype指向返回的这个对象
+//        但是new Test（）并不会将Test的prototype指向返回的这个对象
 //        而是指向new出来的对象（这个对象已经被new出来，只是没有被返回）
 
     })()
@@ -915,7 +871,7 @@
         function hello(thing) {
 //            console.log(this + " says hello " + thing);
         }
-        hello.call("xiaoqiang", "world") //=> Yehuda says hello world
+        hello.call("🚖", "world") //=> 🚖 says hello world
     })()
 
 
@@ -1170,6 +1126,7 @@
         }
         // 2.继承方法
         Student.prototype = new Person()
+        Student.prototype.constructor = Student
         Student.prototype.sayGrade = function () {
             console.log('grade', this.grade)
         }
