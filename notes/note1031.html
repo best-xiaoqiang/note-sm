@@ -1041,11 +1041,12 @@
         function foo() {
             var x = 10
             return function bar() {
-                // var y = 20
+                var y = 20
                 return function inner() {
                     // var y = 21
                     var z = 30
                     console.log('x', x, 'y', y, 'z', z)
+                    console.log('x', window.x, 'y', window.y, 'z', window.z)
                 }
             }
         }
