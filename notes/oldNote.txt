@@ -27,8 +27,6 @@
 <dd></dd>
 </dl>
 
-图片标签
-<img src="../hello/1.jpg" alt="美女" width="100px" height="100px"/>
 
 jpg 颜色数量多
 gif 支持颜色简单 简单透明 支持动态
@@ -89,6 +87,8 @@ div>span{}
 并不是所有的样式都会被继承，比如背景相关的样式、边框相关的样式、宽度、高度。。。
 
 当不同选择器发生冲突的时候，显示哪个样式由选择器的优先级（权重）来决定。
+(-2.min.width)
+(-1.max.width)
 0.！important  (慎用)
 1。内联样式 优先级1000
 2.id选择器  100
@@ -99,14 +99,17 @@ div>span{}
 如果我们使用的是复合选择器，则需要将多个选择器的优先级进行相加然后再比较
 如果选择器一样将优先显示靠下的。
 
-单位
-长度单位
-像素
-百分比：将长度设置为百分比之后,则浏览器会自动根据父元素的指定属性来计算当前的值。
-颜色单位
-1，直接用颜色单词；
-2，rgb(x,x,x),0-255的值；
-3，用十六进制的rbg值表示，语法：#红色绿色蓝色。
+利用max-width可以实现元素逐渐变宽的效果
+当我们不知道元素的具体宽度，可以结合transition来实现动画延迟效果，如下：
+div{
+  max-width: 0;
+  overflow: hidden;
+  transition: max-width 0.25s;
+}
+div.active {
+  max-width: 600px; 
+}
+
 
 盒模型
 border边框的写法：
@@ -115,15 +118,10 @@ border边框的写法：
 	由三个属性写四个边的顺序是：top right bottom left;
 	去掉一个边的简单写法：border-right:none;
 
-padding内边距的写法：
-
 margin外边距的写法：
 margin垂直方向等于auto时，默认值是0；
 margin平行方向等于auto时，默认值是最大。
-居中的写法：
-margin:0px auto;
 
-相邻的垂直方向的外边距会发生重叠现象。
 兄弟元素相邻垂直外边距会取最大值。
 如果父子元素的垂直外边距相邻，子元素的外边距会传递给父元素。
 水平方向的外边距不会重合，而是取和。
@@ -163,25 +161,9 @@ float：left;
 一般情况下我们通过overflow：hidden；来开启元素的bfc，从而解决高度坍塌。
 
 
-定位
-position属性可选值：
-static默认值
-relative开启元素的相对定位
-absolute开启元素的绝对定位
-fixed开启元素的固定定位
-
 层级：文档流<浮动<定位
-
-z-index
-当元素开启了定位以后，可以通过z-index来设置元素的层级；
-z-index需要一个整数作为参数，值越大层级越高
-；
 两个元素发生重叠时，z-index值越大越优先显示，z-index值相同的优先显示下边的元素
 。
-写法：
-position:relative;
-left:100px;
-z-index:99;
 
 
 相对定位：
@@ -236,15 +218,6 @@ padding:5px 0;
 }
 
 
-overflow:
-visible;
-hidden;
-scroll;
-auto;
-
-
-
-
 bfc
 - BFC是元素的隐含属性，当开启元素的BFC以后，元素将会具有如下一些特性
 1.开启BFC以后，子元素的垂直外边距不会传递给父元素
@@ -253,8 +226,8 @@ bfc
 			
 - 开启BFC的方式：
 1.设置元素浮动
-2.设置元素绝对定位
-3.设置元素的display为inline-block
+2.设置元素绝对/固定定位
+3.设置元素的display为inline-block/flex
 4.设置元素的overflow为hidden    √
 
 
@@ -339,36 +312,14 @@ button
 <button type="button">普通按钮</button>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 写在head里面 :
 <script type="text/javascript"></script>
 引用js文件   :
 <script type="text/javascript" src="xxx.js"></script>
 
 
-
-警告框
-alert（“恭喜中了500万”）；
-
 在浏览器窗口中显示一个内容
 document.write("今天天气好晴朗")；
-
-向控制台中输出一个内容
-console.log("我会在控制台中出现");
-
-
-
 
 写在body中的形式：
 <button onclick="alert('讨厌，点我干嘛')；">点我一下</button>
@@ -380,13 +331,6 @@ js语法：
 区分大小写；
 忽略多个换行和空格，因此可以对代码进行格式化；
 语句以；结尾。
-
-
-
-声明和赋值变量
-var a=1,b=2,c=3;
-console.log(a);
-
 
 
 标识符
@@ -418,12 +362,6 @@ Object对象
 \n  -->  换行
 \t  -->  制表符
 \uxxxx  -->  Unicode编码
-
-
-用typeof检测一个变量类型。
-console.log(a);
-console.log(typeof a);
-
 
 数值
 表示数字的最大值：
@@ -529,13 +467,6 @@ c=c+"";
       的结果是100NaN
 
 
-自增自减
-a++或++a之后，a都会+1
-a++的值是变量自增前的值
-++a的值是变量自增后的值
-a--和--a同理。
-
-
 逻辑运算符
 逻辑非
 可以通过对一个值取两次反，来将其转换为Boolean
@@ -558,16 +489,11 @@ a=!!a;
 NaN不与任何值相等，包括他自己。
 检验一个值是否是NaN：isNaN()函数。
 
-
-
-
 三元运算符（三目运算符）：
 max=a>b?a:b;
 
-
 弹出输入框
 var a=prompt("请输入小名的成绩");
-
 
 条件分支语句
 switch（num）{
@@ -580,7 +506,7 @@ case 2:
 default:
  yuju;
  break;
-              }
+}
 
 
 while循环
@@ -591,10 +517,7 @@ do{
 }while(  )
 do...while可以确保循环体至少执行一次。
 
-
 条件表达式恒为true的循环，是死循环，慎用！
-
-
 
 break和continue
 break
@@ -615,16 +538,6 @@ console.timeEnd("计时器的名字");
 求一个数的平方根
 Math.sqrt();
 
-
-
-
-
-
-
-求平方根
-Math.sqrt();
-
-
 Object对象
 
 Object是引用数据类型（其余三种为基本数据类型）。
@@ -639,22 +552,8 @@ Object是引用数据类型（其余三种为基本数据类型）。
 
 
 创建对象
-
   var obj=new Object();
-
   var obj={};
-    obj.age=18;
-    ...
-
-  var obj={
-     age:18,
-     ...
-     test:{
-        age:18,
-        ...
-      }
-   };
-
 
 
 垃圾：
@@ -665,7 +564,6 @@ Object是引用数据类型（其余三种为基本数据类型）。
 
 
 删除属性
-   
    delete obj.age;
 
   
@@ -733,27 +631,21 @@ break是跳出当前的循环。
 函数和方法只是称呼上的不同，没有本质的区别。
 
 
-
 作用域（scope）
 
 在js中一共有两种作用域：
-    1，全局作用域；
-    所有直接写在script标签中的内容都在全局作用域中；
-    全局作用域在页面加载时创建，在页面关闭时销毁；
-    全局作用域中有一个全局对象window，在全局作用域中创建的变量都会作为window的属性保存；在全局作用域中创建的函数都会作为window的方法保存。
-    全局作用域中创建的全局变量可以在页面任何位置访问。
-    2，函数作用域。
-
+1，全局作用域；
+所有直接写在script标签中的内容都在全局作用域中；
+全局作用域在页面加载时创建，在页面关闭时销毁；
+全局作用域中有一个全局对象window，在全局作用域中创建的变量都会作为window的属性保存；在全局作用域中创建的函数都会作为window的方法保存。
+全局作用域中创建的全局变量可以在页面任何位置访问。
+2，函数作用域。
 每调用一次函数就会创建一个新的函数作用域；
 在全局作用域中无法访问函数作用域；
 在函数作用域中如果不使用var关键字，则变量会变成全局变量；
 当我们在函数中使用一个变量的时候，他会先在自身的作用域中被找到；
 如果没有就会去上一级作用域中寻找，知道找到全局作用域为止。如果还没有，就会报错。
 变量函数的提升，在函数作用域中同样适用。
-
-
-
-
 
 
 
@@ -767,13 +659,6 @@ break是跳出当前的循环。
 例如，function fun(){}
 使用函数表达式创建的函数，不会被声明提前。
 例如，var fun=function(){};
-
-
-
-console.log(fun);//打印函数对象，即打印出函数
-console.log(fun());//打印函数的返回值
-
-
 
 
 关于this的一则小笑话：
@@ -790,15 +675,15 @@ this的存在，又比如说明书中的“你”，谁在看说明书，这个�
 	- 根据函数调用的方式，this的值也不同
 		1.以函数形式的调用，this是window
 		2.以方法的形式调用，this是调用方法的对象
-		3.以构造函数的形式调用，this是新建的那个对象
+		3.以构造函数的形式调用，this是新建的那个对象（将this指向这个对象）
 		
 2.构造函数（constructor）
 	- 构造函数就是专门用来创建对象的函数，构造函数其实就是一个普通的函数
 	- 如果使用new关键字调用，则它就是一个构造函数，否则就是一个普通函数
 	- 构造函数的执行流程：
 		1.创建一个新的对象
-		2.将这个新的对象设置为函数的this
-		3.按顺序执行函数中的代码
+    2.将对象的__proto__指向函数的prototype
+		3.将这个新的对象设置为函数的this，按顺序执行函数中的代码
 		4.将新建的对象返回
 	- 构造函数一般都是首字母大写，一个构造函数也称为一个类，
 		通过一个构造函数创建的对象，我们称这个对象是这个类的实例
@@ -874,21 +759,14 @@ arr.splice(1,2，“牛魔王”)；
 前者是开始删除的位置，后者是删除的个数，再后面是插入的值。（可以被用来在指定位置插队）
 返回被删除的元素。
 
-
-forEach
-回调函数
-arr.forEach(function(value,index,obj){console.log("index="+index+","+"value="+value);});
+forEach()
 
 concat()
 连接数组
 不会影响原数组。
 var result=arr.concat(arr2,[1,2,3]);
 
-
 join()
-将数组转换成字符串
-result=arr.join("&&&");
-
 
 sort()
 另一个回调函数。
@@ -919,8 +797,6 @@ function sum(){
 在sum中可以输入任意个数的参数。
 
 
-
-
 call()和apply()
 
 
@@ -930,13 +806,6 @@ this到底是谁？
 3，以构建函数调用，this是新建的对象
 4，使用call和apply调用，this是call和apply第一个参数
 
-this到底是谁（番外篇）？
-1.如果是大老板的内心独白，“你”就是指老板。
-2.如果是下发给员工的指令，“你”就是每一个员工。
-3.如果是产品上的说明书，“你”就是每一个用户。
-4.使用call和apply调用，就是说明这是在对谁说话。
-
-
 fun();                  //window
 fun.call(obj);          //obj
 
@@ -944,7 +813,6 @@ fun.call(obj);          //obj
 fun.call(obj,123,456);
 fun.apply(obj,[123,456]);
 //apply需要将实参封装到一个数组中传递。
-
 
 
 
@@ -972,15 +840,13 @@ var t1=d1.getTime();
 
 //获得当前日期的时间戳
 var t2=Date.now();
-
+Date.now() === new Date().getTime() // true
 
 测试执行时间
 var begin=Date.now();
 alert("hello");
 var end=Date.now();
 console.log(end-begin);
-
-
 
 
 
@@ -1050,10 +916,8 @@ var a=Math.sqrt(PI);
 字符串的所有方法都不会影响原字符串。
 所以要想得到使用方法后的结果必须要赋值。
 
-获取字符串长度：
 str.length
 
-根据索引获得字符串中指定位置的字符：
 var a=str.charAt(6);
 //相当于str[6]
 
@@ -1067,7 +931,6 @@ var a=String.fromCharCode(0x4dc0);
 str=str1.concat(str2);
 //相当于str=str1+str2;
 
-
 indexOf()
 lastIndexOf()
 检查一个字符串是否含有指定内容。
@@ -1075,11 +938,8 @@ lastIndexOf()
 如果字符串中没有指定内容，则会返回-1.
 indexOf()是从前往后找；lastIndexOf()是从后往前找。
 var a=str.indexOf("1",4);
-参数：“1”：要查找的内容；
+参数：“1”：要查找的内容；(不支持正则表达式，search支持但是只能返回第一个)
         4  ：指定开始查找的位置
-
-
-
 
 slice（）
 截取字符串中的指定内容
@@ -1087,12 +947,10 @@ slice（）
 第二个如果不写就会一直截到最后。
 参数如果是负值，则从后往前计算。
 
-
 substring()
 同slice。
 不同：substring（）不支持负数作为参数，如果写负数相当于写0。
 该方法会自动调整参数的位置，如果第一个参数大于第二个参数则会自动交换位置。
-
 
 substr()
 也是截取字符串中的指定内容。
@@ -1100,34 +958,25 @@ substr()
 1，截取开始位置的索引（包含开始位置）；
 2，截取的数量。
 
-
 split
 将字符串拆分成一个数组:
 str="a@b@c@d@e@f";
 result=str.split("@");
 可以接受一个正则表达式作为参数，而且默认会全局去拆字符串。
 
-
-将字符串转换成大写：
 str=str.toUpperCase();
-
-将字符串转换成小写：
 str=str.toLowerCase();
-
-
 
 
 
 正则表达式
 
-创建：var reg=new RegExp("a");
+var reg=new RegExp("a");
 
-检查：console.log（reg.test("a")）;
-
+console.log（reg.test("a")）;
 
 不区分大小写：
 var reg=new RegExp("a","i");
-
 
 字面量：
 var reg=/a/i;
@@ -1171,7 +1020,7 @@ search()
 如果没有找到就返回-1
 在search中可以传入正则表达式
 search（）不能使用全局通配。
-就是只返回该内容第一次出现的索引。？？？
+就是只返回该内容第一次出现的索引。
 
 match()
 将符合正则表达式的内容提取出来。
@@ -1260,14 +1109,11 @@ querySelectorAll(selector)   //返回全部选择器匹配的HTML页面元素。
 
 通过 getElementsByName()、getElementsByTagName() 和 getElementsByClassName() 方法获取的 NodeList 就是动态的 NodeList。
 
-
-
-
 创建节点
 document.createElement('li');
 
 
-属性节点???(了解)
+属性节点
 // 1. 获取 <div> 标签
 var node = document.getElementById("div");
 // 2. 创建属性节点
@@ -1276,6 +1122,8 @@ var a = document.createAttribute("my_attrib");
 a.nodeValue = "属性值";
 // 4. 将属性节点添加到 <div> 标签中
 node.setAttributeNode(a);
+
+（element.setAttribute(attributename,attributevalue)）
 
 文本节点
 document.createTextNode(文本内容);
@@ -1293,7 +1141,6 @@ parentElement:
 通过getElementsByTagName()方法来解决。
 
 
-
 childNodes   所有子节点的集合（数组）；
 firstChild   第一个子节点
 lastChild    最后一个子节点
@@ -1307,7 +1154,6 @@ parent.appendChild(child);
 会被插入到指定父节点的最后面。
 
 parent.insertBefore(newChild,currentChild)
-
 
 删除节点
 parent.removeChild(two);
@@ -1339,10 +1185,8 @@ element.removeAttribute（属性名）；
 判断是否含有属性
 element.hasAttribute(属性名)；
 
-
 获取文本内容
 textNode.nodeValue
-
 
 innerText
 不能获取被CSS样式隐藏的文本内容
@@ -1352,14 +1196,11 @@ textContent
 可以获取全部文本内容
 ie8及以前的版本不会支持
 
-
 innerHTML
 存在安全隐患，不应该用它添加来自于用户输入的内容。
 
-
 设置内联样式
 element.style.attrName=attrValue
-
 
 获取当前的样式
 window.getComputedStyle(element,null)
@@ -1388,9 +1229,9 @@ offsetHeight
 element.offsetParent:
 var btn3=document.getelementbyid('btn3');
 btn3.onclick=function(){
-var div3=document.getelementbyid('div3');
-var show3=document.getelementbyid('show3');
-show3.innerHTML='div 标签的定位元素是：'+div3.offsetParent;
+  var div3=document.getelementbyid('div3');
+  var show3=document.getelementbyid('show3');
+  show3.innerHTML='div 标签的定位元素是：'+div3.offsetParent;
 }
 上述代码运行的结果是：
 当前div标签开启了position属性的定位父元素。
@@ -1421,10 +1262,10 @@ element.addeventlistener(event,callback,boolean);
 事件监听器
 兼容方案：
 function bind(elem,event,callback){
- if(elem.addeventlistener){
-  elem.addeventlistener(event,callback,false);
+ if(elem.addEventListener){
+  elem.addEventListener(event,callback,false);
  }else{
-  elem.attachevent('on'+event,function(){
+  elem.attachEvent('on'+event,function(){
    callback.call(elem);
   });
  }
@@ -1446,6 +1287,8 @@ var target=event.target||event.srcElement;
 
 注意：this 和 event.target 的区别。
 通过this关键字来指定绑定该事件的标签。
+this指触发事件的元素，无论你鼠标点击在什么位置，触发事件的元素都是ul，所以this指ul，但是e.target指鼠标的焦点元素，如果你点击到了ul内部的li，则e.target指的就是li，但是如果你点击的是ul其他的非li部分，则this和e.target是一样的。
+如果不是通过冒泡产生的事件，则this和e.target没有区别
 
 
 
@@ -1473,11 +1316,8 @@ clientX和clientY
 screenX和screenY
 鼠标在整个屏幕中的位置。
 
-
 offsetX和offsetY
 鼠标相对于定位父元素的位置
-（DOM第四天笔记）
-
 
 
 事件周期
@@ -1485,7 +1325,7 @@ offsetX和offsetY
 
 阻止事件冒泡的兼容方案：
 if(event.stopPropagation){
- event.stoppropagation();
+ event.stopPropagation();
 }else{
  event.cancelBubble=true;
 }
@@ -1500,14 +1340,6 @@ ul.onclick=function(event){
   alert('我是一个超链接');
  }
 }
-
-
-
-
-
-
-
-
 
 
 
@@ -1531,7 +1363,6 @@ scrollBy()
 scrollTo()
 将浏览器窗口滚动到指定坐标值。
 
-
 Navigator对象
 表示当前浏览器，该对象包含了浏览器的信息。
 值得注意的是：Navigator对象没有相应的标准，不过各个浏览器都支持。
@@ -1539,39 +1370,16 @@ Navigator对象
 Navigator对象的userAgent属性，
 可以实现识别浏览器的功能。
 
-
 history.length
 可以获取浏览器中访问的网站的数量。
-
 
 前进和后退
 forward()  下一个页面
 back()     跳到上一个页面
 go()  	   跳转到指定页面。负数表示后退。
 
-
 reload()
 刷新页面
-
-
-获取和设置当前浏览器的地址栏信息：
-window.location=地址的字符串
-console.log(window.location);
-location.href=地址的字符串
-
-
-
-
-定时器
-setInterval(code,millisec)
-	  函数	  时间间隔（毫秒）
-取消定时器
-var t=clearInterval(t);
-
-延时执行
-setTimeout(code,millisec)
-clearTimeout(参数)
-参数必须是setTimeout()方法的返回值。
 
 
 
@@ -1579,10 +1387,6 @@ clearTimeout(参数)
 整型（整数）中是否含有0？ 包含。
 
 javascrip中无论什么进制，计算之后得到的结果都是十进制。
-
-isNaN（）方法
-true表示当前值不是数字值
-false表示当前值是数字值
 
 报错的undefined与提示的undefined的区别？
 报错的：变量根本不存在。
@@ -1597,7 +1401,6 @@ undefined类型仅仅只有一个值，就是undefined。
 
 浅复制：内存地址的复制，而不是数据的地址。
 深复制：数据的复制，而不是内存地址的复制。
-
 
 
 
@@ -1640,12 +1443,6 @@ json对象=JSON.parse(JSON字符串)
 
 
 
-
-
-
-
-xu老师
-
 包含块
 
 元素相对定位或者相对大小计算的参照。
@@ -1659,19 +1456,14 @@ xu老师
 固定定位的元素：
 视口（viewport）,布局视口。
 
-
-
 position:absolute;的包含块是
 1.初始包含块；
-2.距离其最近的开启了定位的祖先元素。（我用的和老师用的都是position:relative）
+2.距离其最近的开启了定位的祖先元素。
 
-
-
-负外边距
+父外边距
 document.documentElement.clientWidth   视口宽度
+
 window.onresize  监控视口改变
-
-
 
 padding
 相当于把页面拉长。
@@ -1684,28 +1476,22 @@ margin（负的）
 
 
 
-
-
-
-
 字体
 
 默认字体大小：16px。
 
-
-
 间隙
-
 解决inline-block元素由于换行导致的间隙：
 <img src='img/1.jpg'><!--
 --><img src='img/2.jpg'>
-<input type='button' value='苏有朋'><!--
---><input type='button' value='马可波罗’>
-
-
+终极必杀：给父元素 设置font-size：0 ；letter-spacing：-3px ，子元素重新设置font-size
+ul{
+  list-style: none;
+  font-size: 0;
+  letter-spacing: -3px;
+}
 
 斜体
-
 font-style:italic;
 font-style:oblique;
 italic和oblique都是向右倾斜的文字，
@@ -1713,13 +1499,6 @@ italic和oblique都是向右倾斜的文字，
 italic是指斜体字，oblique是倾斜的文字。
 对于没有斜体的字体，应该使用的是
 oblique。
-
-
-
-字体
-
-加粗
-font-weight:bold;
 
 衬线字体：
 serif 浏览器自主选择使用哪个衬线字体
@@ -1729,20 +1508,15 @@ font-family:"华文中宋"，"华文仿宋"，serif;
 sans-serif 自主选择使用哪个非衬线字体
 font-family:Microsoft YaHei,tahoma,sans-serif;
 
-
-
 让小写的字母
 个头小，但是大写：
 font-variant:small-caps;
-
-
 
 简写
 
 是有固定顺序的：
 {粗细，斜体，小型大写字母} 字体大小 字体族
 font:bold italic small-caps 72px "华文仿宋"；
-
 
 简写的后遗症
 font:bold 36px '微软雅黑'；
@@ -1753,58 +1527,26 @@ font:bold 36px/1.2 '微软雅黑'；
 自己把行高写上，
 font:bold 36px/300px '微软雅黑';
 
-
-
-水平对齐
-
-固定宽的块元素，行内文本，内联元素，行内块元素，水平方向对齐：
-text-align:
- left	左对齐
- center	水平居中
- rignt  右对齐
-
-如果是快元素（display:block,table...独占一行）水平对齐：
-margin:0 auto;
-
-
 大小写转换
-
-小到大：
 text-transform:uppercase;
-
-大到小：
 text-transform:lowercase;
-
 单词首字母大写：
 text-transform:capitalize;
 
-
-
 行高
-
 默认值是1.2
 （基于元素的字的大小计算）
 line-height:1.2;
 
 
 垂直居中
-
-让文本内容和inline元素在指定高度的块元素中垂直方向居中：
-line-height 等于 块元素的高度。
-
-
-vertical-align:baseline;
-让文本，行内元素，行内块元素，一行中文本内容在底部
-
 vertical-align:middle;
 让行内块元素，沿着一行中文本小写字母的1/2处对齐
 ！！必须设置在行内块元素（img input）
 设置vertical-align:middle;之前要在父元素中将line-heignt设置为块元素的高度。
 
-
 首行缩进
 text-indent:2em;
-
 
 书写方向
 左到右：
@@ -1812,17 +1554,14 @@ direction:ltr;
 右到左：
 direction:rtl;
 
-
 字符间距
 letter-spacing:20px;
 
 空格之间的间距
 word-spacing:2em;
 
-
 display:table-cell;
 仅适用于局部布局。
-
 
 两种居中方式的比较：
 1.在inline-block中设置vertical-align:middle;
@@ -1833,106 +1572,42 @@ display:table-cell;
   让table-cell的内容在垂直方向水平居中。
   在父元素中设置display:table-cell;中后，还要设置vertical-align:middle;,这次是设置在父元素中，就能实现图片的垂直居中。如果想要
 让父元素里的文字居中，就也要在这个子元素中写入vertical-align:middle.
-我也不知道这是为什么，所以在用display：table-cell;时，最好两个地方都写上vertical-align:middle.
-
-
-特殊的vertical
-vertical-align: super;
-vertical-align: sub;（出现在前面文字的下脚标的位置，其他不知道什么鬼）
-vertical-align: top;
-vertical-align: bottom;
-<sup></sup>右上角
-<sub></sub>右下角
-
 
 
 背景图
 
-background-image:url('img/bg.jpg');
-
-必须设置大小。
-
-横铺：
-background-repeat:repeat-x;
-竖铺：
-background-repeat:repeat-y;
-不铺：
-background-repeat:no-repeat;
-
-移动背景图:
-background-position:xpx ypx;
-
-居中显示：
-background-position:center;
-
-在某边的1/2处：
-background-position:left;
-
-右上角：
-background-position:right top;
-
-
 背景图的固定定位：
 background-attachment:fixed;
 
-
 简写：
-background:#f0f0f0 url('img/bg.jpj') no-repeat center fixed;
+background: [background-color] 
+  [background-image] 
+  [background-repeat] 
+  [background-attachment] 
+  [background-position] / [ background-size] 
+  [background-origin] 
+  [background-clip];
+background: red 
+  url(img.png) 
+  no-repeat 
+  fixed 
+  center center / 50%
+  content-box
+  content-box;
+
 
 
 background图片和img引入的图片
 的区别：
   性能
-background引入的图片是异步加载，性能高；
-img同步加载图片，性能不好。
+  background引入的图片是异步加载，性能高；
+  img同步加载图片，性能不好。
   使用场景
-background用于不重要的图片内容，例如显示用的图标；
-img因为拥有alt属性，用于重要的网站内容，例如商品图片，网站的LOGO。
+  background用于不重要的图片内容，例如显示用的图标；
+  img因为拥有alt属性，用于重要的网站内容，例如商品图片，网站的LOGO。
 
 
-精灵图
-.icon{
- display:inline-block;
- width:38px;
- height:38px;
- background:url('img/pwd-icon-new.png') no-repeat;
-}
-
-.icon-lock-red{
- background-position:-49px -95px; 
-}
-
-.icon-user-gray{
- background-position:0 -48px;
-}
-
-
-
-
-
-
-
- 第四天内容
-
-
- img为行内块元素
-代码中有换行符时，图片之间会出现缝隙，图片下面也会因为基线出现缝隙。
-
- 解决：
- 方法一：
-float:left;
- 
- 方法二(最安全)：
-img元素设置
-vertical-align:middle;
-同时，
-<img xxx><!--
---><img xxx>
-
-
-
-
- 目标状态伪类
+目标状态伪类
 （当元素通过锚链接点击时）
 #page1:target{
  background-color:red;
