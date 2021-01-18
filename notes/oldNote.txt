@@ -1618,8 +1618,6 @@ background图片和img引入的图片
 <a href='#page1'>page1</a>
 <div id='page1'>1</div>
 
-
-
 结构化伪类选择器
 选中第一个li
 ul li:first-child{
@@ -1650,10 +1648,7 @@ ul li:nth-of-type(5n){
 }
 
 
-
-
 伪元素
-
 
 伪元素 与 元素的区别：
 1.无法通过JS获取其DOM
@@ -1662,16 +1657,7 @@ ul li:nth-of-type(5n){
 伪元素特点：
 1.默认是display:inline
 2.必须包含content属性，其值是字符串，通过空格连接两个字符串。
-3.规范要求伪元素使用：：，为了支持IE8使用；
-
-
-.box::before{
- content:'hello';
-}
-.box:before{
- content:'hello';
-}
-
+3.规范要求伪元素使用::，为了支持IE8使用；
 
 首个字母：
 .box::first-letter{
@@ -1683,7 +1669,6 @@ ul li:nth-of-type(5n){
   background-color:orangered;
   color:blue;
 }
-
 
 伪元素的应用：
 
@@ -1699,8 +1684,6 @@ li:before{
   content:'$';
 }
 
-
-
 计数函数：
 ol li{
   counter-increment:num;
@@ -1713,7 +1696,6 @@ ol li:before{
 ol{
   counter-reset:num;
 }
-
 
 
 属性选择器
@@ -1732,19 +1714,16 @@ div[test*='world']{}
 
 如果content使用url函数，必须给伪元素设置
 display:inline-block;
-width:图片宽度;
-height:图片高度;
+width:宽度;
+height:高度;
 
-
-显示属性内容
-的应用
+显示属性内容的应用
 @media print{
   content:attr(href);
   margin-left:8px;
+}
 
-
-
-classlist
+classList
 所有DOM中都包含该属性对象，只针对class属性操作
 新增一个class属性值
 box1Dom.classList.add('box2');
@@ -1759,14 +1738,10 @@ document.title=box1Dom.classList.contains('box');
 document.title=box1Dom.classList.length;
 
 
-自定义属性？？？
-
-
-
 checked
 
 input[type='checkbox']{
- xxx
+ ...
  /*清空表单项的默认样式*/
  -webkit-appearance:none;
  -moz-appearance:none;
@@ -1778,16 +1753,6 @@ input[type='checkbox']{
 input[type='checkbox']:checked{
  xxx
 }
-
-
-透明颜色设置
-background-color:rgba(0,0,0,.5);
-
-
-
-
-
-
 
 兼容问题
 
