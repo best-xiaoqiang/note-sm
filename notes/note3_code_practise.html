@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>note3</title>
+</head>
+<body>
+  <div>note3</div>
+  <script>
+    ;(function () {
+      // return
+    })()
+
+    // 1.手写-字符串最长的不重复子串
+    ;(function () {
+      return
+      var str1 = 'bbbbbb'
+      var str2 = 'ddebbssq'
+      function lengthOfLongestSubstring(str){
+        if(!str){
+          return 0
+        }
+        var max = 1
+        var noRepeatArr = []
+        for (let i = 0; i < str.length; i++) {
+          const strItem = str[i];
+          if(noRepeatArr.indexOf(strItem) > -1){
+            noRepeatArr = [strItem]
+          }else{
+            noRepeatArr.push(strItem)
+          }
+          max = Math.max(max, noRepeatArr.length)
+        }
+        return max
+      }
+      console.log(lengthOfLongestSubstring(str1))
+      console.log(lengthOfLongestSubstring(str2))
+    })()
+
+    // 2.
+    // const output={
+    //   "KeyA": 1, 
+    //   "KeyB.c": 2, 
+    //   "KeyB.d": 3, 
+    //   "KeyB.e.f": 7, 
+    //   "KeyB.e": 2
+    // }
+    ;(function () {
+      return
+      const oldObject = {
+        "KeyA": 1, 
+        "KeyB":{
+          "c": 2, 
+          "d": 3, 
+          "e":{
+            "f": 7, 
+            "" : 2
+          }
+        }
+      }
+      function flattenFn(obj){
+        let newObj = {}
+        for (const key in obj) {
+          if (Object.hasOwnProperty.call(obj, key)) {
+            const element = obj[key];
+            
+          }
+        }
+        return newObj
+      }
+      function getFlattenStr(){
+
+      }
+    })()
+
+    // 3.
+    ;(function () {
+      // return
+
+  
+    })()
+  </script>
+</body>
+</html>
