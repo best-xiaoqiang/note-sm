@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>30s</title>
+</head>
+<body>
+  <script>
+    /* 1.query string to object */
+    ;(function () {
+      return
+
+      function queryStringToObj(queryStr) {
+        return [...new URLSearchParams(queryStr.split('?')[1])].reduce((obj, [k, v])=>{
+          obj[k] = v
+          return obj
+        }, {})
+      }
+      const url = 'http://baidu.com?a=1&b=2&c=3'
+      console.log(queryStringToObj(url)) // {a: '1', b: '2', c: '3'}
+    })()
+
+    /* 2.count grouped elements */
+    ;(function () {
+      return
+
+      const countBy = (arr, fn) =>
+      arr.map(typeof fn === 'function' ? fn : val => val[fn]).reduce((acc, val) => {
+        acc[val] = (acc[val] || 0) + 1;
+        return acc;
+      }, {})
+      
+      console.log(countBy(['one', 'two', 'three'], 'length'))
+    })()
+
+    /* 3.get object property from path string */
+    ;(function () {
+      return
+
+      const get = (from, ...selectors) =>
+        [...selectors].map(s =>
+          s
+            // .replace(/\[([^\[\]]*)\]/g, '.$1.')
+            .replace(/\[|\]/g, '.')
+            .split('.')
+            .filter(t => t !== '')
+            .reduce((prev, cur) => prev && prev[cur], from)
+        )
+      
+      const obj = {
+        selector: { to: { val: 'val to select' } },
+        target: [1, 2, { a: 'test' }],
+      }
+      const res = get(obj, 'selector.to.val', 'target[0]', 'target[2].a') // ['val to select', 1, 'test']
+      console.log(res)
+    })()
+
+    /* 4.format duration */
+    ;(function () {
+      return
+
+      const formatDuration = ms => {
+        if (ms < 0) ms = -ms;
+        const s = 1000
+        const min = s * 60
+        const hour = min * 60
+        const day = hour * 24
+        const time = {
+          day: Math.floor(ms / day),
+          hour: Math.floor(ms / hour) % 24,
+          minute: Math.floor(ms / min) % 60,
+          second: Math.floor(ms / s) % 60,
+          millisecond: Math.floor(ms) % 1000
+        };
+        return Object.entries(time)
+          .filter(data => data[1] !== 0)
+          .map(([k, v]) => `${v} ${k}${v !== 1 ? 's' : ''}`)
+          .join(', ');
+      }
+
+      console.log(formatDuration(1001))
+      // '1 second, 1 millisecond'
+      console.log(formatDuration(34325055574))
+      // '397 days, 6 hours, 44 minutes, 15 seconds, 574 milliseconds'
+
+    })()
+
+    /* 5.compact object */
+    ;(function () {
+      return
+
+      const compactObject = val => {
+        const data = Array.isArray(val) ? val.filter(Boolean) : val;
+        return Object.keys(data).reduce(
+          (acc, key) => {
+            const value = data[key];
+            if (Boolean(value))
+              acc[key] = typeof value === 'object' ? compactObject(value) : value;
+            return acc;
+          },
+          Array.isArray(val) ? [] : {}
+        );
+      };
+      const obj = {
+        a: null,
+        b: false,
+        c: true,
+        d: 0,
+        e: 1,
+        f: '',
+        g: 'a',
+        h: [null, false, '', true, 1, 'a'],
+        i: { j: 0, k: false, l: 'a' }
+      };
+      console.log(compactObject(obj))
+      // { c: true, e: 1, g: 'a', h: [ true, 1, 'a' ], i: { l: 'a' } }
+    
+      console.log(compactObject(['a','b',0,'', 'c']))
+      // ['a', 'b', 'c']
+    })()
+
+    /* 6.flatten object */
+    ;(function () {
+      const flattenObject = (obj, prefix = '') =>
+        Object.keys(obj).reduce((acc, k) => {
+          const pre = prefix.length ? `${prefix}.` : '';
+          if (
+            typeof obj[k] === 'object' &&
+            obj[k] !== null &&
+            Object.keys(obj[k]).length > 0
+          )
+            Object.assign(acc, flattenObject(obj[k], pre + k));
+          else acc[pre + k] = obj[k];
+          return acc;
+        }, {})
+
+      const res = flattenObject({ a: { b: { c: 1 } }, d: 1 })
+      console.log(res) // { 'a.b.c': 1, d: 1 }
+    })()
+
+    /*  */
+    ;(function () {
+
+    })()
+
+    /*  */
+    ;(function () {
+
+    })()
+
+    /*  */
+    ;(function () {
+
+    })()
+
+/* test */
+;(function () {
+      
+})()
+
+
+
+</script>
+</body>
+</html>

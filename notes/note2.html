@@ -1217,7 +1217,7 @@
 
     /* 43.访问嵌套对象 */
     ;(function () {
-        // return
+        return
 
         let user = null
         let name = ((user || {}).userInfo || {}).name || ''
@@ -1225,6 +1225,41 @@
     })()
 
 
+
+    /* 44.渲染几万条数据不卡 */
+    ;(function () {
+      return
+
+      const TOTAL_COUNT = 100000
+      const ONCE = 20
+      const ulDom = document.getElementById('ul')
+      let offset = 0
+      function add(){
+        const fragment = document.createDocumentFragment()
+        for (let i = 0; i < ONCE; i++) {
+          const liDom = document.createElement('li')
+          liDom.innerHTML = Math.random()*TOTAL_COUNT
+          fragment.appendChild(liDom)
+          offset++
+        }
+        ulDom.appendChild(fragment)
+        if(offset < TOTAL_COUNT){
+          console.log('requestAnimationFrame offset:', offset)
+          window.requestAnimationFrame(add)
+        }
+      }
+      add()
+    })()
+
+    /* 45. */
+    ;(function () {
+
+    })()
+
+    /*  */
+    ;(function () {
+
+    })()
 
     /*  */
     ;(function () {

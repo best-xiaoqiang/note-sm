@@ -2,14 +2,14 @@ class Vue{
     constructor(options = {}){
         this.$el = document.querySelector(options.el);
         let data = this.data = options.data;
-        // 浠ｇ悊data锛屼娇鍏惰兘鐩存帴this.xxx鐨勬柟寮忚闂甦ata锛屾甯哥殑璇濋渶瑕乼his.data.xxx
+        // 代理data，使其能直接this.xxx的方式访问data，正常的话需要this.data.xxx
         Object.keys(data).forEach((key)=> {
             this.proxyData(key);
         });
-        this.methods = options.methods // 浜嬩欢鏂规硶
-        this.watcherTask = {}; // 闇€瑕佺洃鍚殑浠诲姟鍒楄〃
-        this.observer(data); // 鍒濆鍖栧姭鎸佺洃鍚墍鏈夋暟鎹�
-        this.compile(this.$el); // 瑙ｆ瀽dom
+        this.methods = options.methods // 事件方法
+        this.watcherTask = {}; // 需要监听的任务列表
+        this.observer(data); // 初始化劫持监听所有数�?
+        this.compile(this.$el); // 解析dom
     }
     proxyData(key){
         let that = this;

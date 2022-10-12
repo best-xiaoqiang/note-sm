@@ -75,11 +75,32 @@
       }
     })()
 
-    // 3.
+    // 3.写一个 mySetInterVal(fn, a, b),每次间隔 a,a+b,a+2b...的时间，然后写一个 myClear，停止上面的 mySetInterVal
     ;(function () {
-      // return
+      return
 
-  
+      function mySetInterVal(fn, a, b){
+        let timer
+        let count = 1
+        function start() {
+          let delay = a + (count - 1)*b
+          console.log('delay:', delay)
+          timer = setTimeout(() => {
+            fn()
+            count++
+            start()
+          }, delay);
+        }
+        start()
+        function myClear() {
+          clearTimeout(timer)
+        }
+        return myClear
+      }
+      var myClear = mySetInterVal(()=>{
+        console.log('start')
+      }, 3, 10)
+      // myClear()
     })()
   </script>
 </body>
